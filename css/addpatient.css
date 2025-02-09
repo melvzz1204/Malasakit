@@ -1,94 +1,94 @@
 .addpatient-container {
-    position: absolute;
-    left: 21%;
-    top: 20%;
-    display: flex;
-    flex-direction: column;
-    width: 80%;
+  position: absolute;
+  left: 21%;
+  top: 20%;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
 }
 select {
-    font-size: 0.9em;
-    user-select: none;
+  font-size: 0.9em;
+  user-select: none;
 }
 
 .btn-btn {
-    background-color:rgb(232, 13, 126);
-    color: white;
-    padding: 5px;
-    font-size: 0.9em;
-    border-radius: 0.2rem;
+  background-color: rgb(232, 13, 126);
+  color: white;
+  padding: 5px;
+  font-size: 0.9em;
+  border-radius: 0.2rem;
 }
 
 .Prev {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 .btn-container {
-    width: 250px;
-    padding-bottom: 50px;
-    padding-top: 50px;
-    top: 100%;
-    margin: 0 auto;
-    left: 40%;
+  width: 250px;
+  padding-bottom: 50px;
+  padding-top: 50px;
+  top: 100%;
+  margin: 0 auto;
+  left: 40%;
 }
 
 .content {
-    display: none;
+  display: none;
 }
 
 .contentActive {
-    display: block;
+  display: block;
 }
 
 .head-malasakit {
-    position: fixed;
-    z-index: 1;
-    width: 250vh;
+  position: fixed;
+  z-index: 1;
+  width: 250vh;
 }
 
 .left-dashboard {
-    position: fixed;
-    top: 11%;
+  position: fixed;
+  top: 15%;
 }
 .addpatient-inputs {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 span {
-    text-align: center;
+  text-align: center;
 }
 
 input[type="text"] {
-    border-bottom: 1px solid rgb(9, 9, 9, 0.2);
-    outline: none;
-    text-transform: uppercase;
+  border-bottom: 1px solid rgb(9, 9, 9, 0.2);
+  outline: none;
+  text-transform: uppercase;
 }
 
 label {
-    opacity: 60%;
+  opacity: 60%;
 }
 
 .main-option {
-    display: flex;
+  display: flex;
 }
 
 .custom-select {
-    width: 250px;
+  width: 250px;
 }
 .btn-next {
-    padding: 8px;
-    width: 100px;
-    color: white;
-    border-radius: 5px;
-    margin-left: 40%;
-    margin-top: 40px;
-    margin-bottom: 100px;
-    background-color: rebeccapurple;
+  padding: 8px;
+  width: 100px;
+  color: white;
+  border-radius: 5px;
+  margin-left: 40%;
+  margin-top: 40px;
+  margin-bottom: 100px;
+  background-color: rebeccapurple;
 }
-.btn-submit{
-    position: absolute;
-    bottom: -15%;
-    left: 40%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
+.btn-submit {
+  position: absolute;
+  bottom: -15%;
+  left: 40%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
