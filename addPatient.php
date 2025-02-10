@@ -53,12 +53,15 @@
 
     // Validate contact number
     function validateContactNumber() {
-        const contactNumber = document.getElementById("contact_number").value;
+        const contactNumberInput = document.getElementById("contact_number");
+        const contactNumber = contactNumberInput.value;
         const regex = /^\d{11}$/;
         if (!regex.test(contactNumber)) {
             alert("Contact number must be exactly 11 digits and contain only numbers.");
+            contactNumberInput.style.borderColor = "red";
             return false;
         }
+        contactNumberInput.style.borderColor = "";
         return true;
     }
 </script>
@@ -279,7 +282,7 @@
                 </div>
                 <div class="p-3 ml-3 flex gap-4">
                     <label for="">Campanion Contact No.</label>
-                    <input type="text" class="ml-1 w-1/8" name="companion_contact">
+                    <input type="text" class="ml-1 w-1/8" name="companion_contact" id="contact_number">
                     <label for="" class="ml-6">Date of Admission/Consultation:</label>
                     <input type="date" class="ml-2 w-40" name="admission_date">
                 </div>
