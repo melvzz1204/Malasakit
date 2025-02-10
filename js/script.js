@@ -28,6 +28,5 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-
   showContent(currentIndex);
 });

@@ -60,7 +60,7 @@ CREATE TABLE `transactions` (
 --
 
 CREATE TABLE `patients` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `first_name` varchar(50) NOT NULL,
   `last_name` varchar(50) NOT NULL,
   `middle_name` varchar(50),
@@ -84,7 +84,8 @@ CREATE TABLE `patients` (
   `companion_contact` varchar(20),
   `admission_date` date,
   `diagnosis` text,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
