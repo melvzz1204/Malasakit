@@ -56,6 +56,38 @@ CREATE TABLE `transactions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Table structure for table `patients`
+--
+
+CREATE TABLE `patients` (
+  `id` int(11) NOT NULL,
+  `first_name` varchar(50) NOT NULL,
+  `last_name` varchar(50) NOT NULL,
+  `middle_name` varchar(50),
+  `name_extension` varchar(10),
+  `contact_number` varchar(20),
+  `address` varchar(255),
+  `date_of_birth` date,
+  `age` int(3),
+  `sex` enum('Male', 'Female'),
+  `civil_status` enum('Single', 'Married', 'Widow'),
+  `place_of_birth` varchar(255),
+  `religion` varchar(50),
+  `educational_attainment` varchar(50),
+  `occupation` varchar(50),
+  `employment_status` varchar(50),
+  `daily_income` decimal(10,2),
+  `monthly_income` decimal(10,2),
+  `sectoral_membership` varchar(255),
+  `companion_name` varchar(50),
+  `companion_address` varchar(255),
+  `companion_contact` varchar(20),
+  `admission_date` date,
+  `diagnosis` text,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
 -- Indexes for dumped tables
 --
 
@@ -73,6 +105,12 @@ ALTER TABLE `transactions`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `patients`
+--
+ALTER TABLE `patients`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -87,6 +125,13 @@ ALTER TABLE `admin`
 --
 ALTER TABLE `transactions`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `patients`
+--
+ALTER TABLE `patients`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
