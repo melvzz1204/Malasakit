@@ -11,61 +11,62 @@
     <link rel="stylesheet" href="css/addpatient.css">
 </head>
 <style>
-    .success-message {
-        display: none;
-        background-color: #d4edda;
-        color: #155724;
-        border: 1px solid #c3e6cb;
-        padding: 30px;
-        margin: 10px 0;
-        border-radius: 5px;
-        position: absolute;
-        top: -16%;
-        right: 1%;
-        z-index: 500;
-    }
+.success-message {
+  display: none;
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  padding: 30px;
+  margin: 10px 0;
+  border-radius: 5px;
+  position: absolute;
+  top: -14%;
+  right: 50%;
+  z-index: 500;
+  animation-name: message;
+  animation-duration: 1s;
+}
+@keyframes message {
+  from {
+      top: -20%;
+      opacity: 0;
+  }
+  to {
+      top: -14%;
+      opacity: 1;
+  }
+}
 </style>
 <script>
-    // show success message
-    function showSuccessMessage() {
-        const messageDiv = document.getElementById("success-message");
-        messageDiv.style.display = "block";
-        setTimeout(() => {
-            messageDiv.style.display = "none";
-        }, 1500);
-    }
-
-    //calculate age
     function calculateAge() {
-        const dob = document.getElementById("date_of_birth").value;
-        const birthDate = new Date(dob);
-        const today = new Date();
-        let age = today.getFullYear() - birthDate.getFullYear();
-        const monthDiff = today.getMonth() - birthDate.getMonth();
-        if (
-            monthDiff < 0 ||
-            (monthDiff === 0 && today.getDate() < birthDate.getDate())
-        ) {
+        var dob = document.getElementById('date_of_birth').value;
+        var today = new Date();
+        var birthDate = new Date(dob);
+        var age = today.getFullYear() - birthDate.getFullYear();
+        var m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
             age--;
         }
-        document.getElementById("age").value = age;
+        document.getElementById('age').value = age;
     }
 
-    // Validate contact number
     function validateContactNumber() {
-        const contactNumberInput = document.getElementById("contact_number");
-        const contactNumber = contactNumberInput.value;
-        const regex = /^\d{11}$/;
-        if (!regex.test(contactNumber)) {
-            alert("Contact number must be exactly 11 digits and contain only numbers.");
-            contactNumberInput.style.borderColor = "red";
+        var contactNumber = document.getElementById('contact_number').value;
+        if (contactNumber.length < 11) {
+            alert('Contact number must be 11 digits');
             return false;
         }
-        contactNumberInput.style.borderColor = "";
         return true;
     }
-</script>
 
+    function showSuccessMessage() {
+        var successMessage = document.getElementById('success-message');
+        successMessage.style.display = 'block';
+        setTimeout(function() {
+            successMessage.style.display = 'none';
+        }, 2000);
+    }
+</script>
 <body>
     <div class="flex flex-row justify-start items-center bg-pink-300 p-3 head-malasakit">
         <img src="assets/malasakit_logo.png" alt="add" style="width: 100px; margin-left:50px">
@@ -288,7 +289,7 @@
                 </div>
                 <div class="p-3 ml-3 flex gap-4">
                     <label for="">Patient Diagnosis:</label>
-                    <textarea name="diagnosis" id="" rows="5" cols="40" class="border border-600 mt-2"></textarea>
+                    <textarea name="diagnosis" id="" rows="5" cols="40" class="border border-pink-200 mt-2 p-2 outline-none"></textarea>
                 </div>
                 <div class="p-5 btn-submit">
                     <button type="submit" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 border border-pink-700 rounded">Submit</button>
@@ -371,3 +372,4 @@
 <script src="js/script.js"></script>
 
 </html>
+
