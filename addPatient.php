@@ -10,32 +10,35 @@
     <link rel="stylesheet" href="css/slidepanel.css">
     <link rel="stylesheet" href="css/addpatient.css">
 </head>
+
 <style>
-.success-message {
-  display: none;
-  background-color: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
-  padding: 30px;
-  margin: 10px 0;
-  border-radius: 5px;
-  position: absolute;
-  top: -14%;
-  right: 50%;
-  z-index: 500;
-  animation-name: message;
-  animation-duration: 1s;
-}
-@keyframes message {
-  from {
-      top: -20%;
-      opacity: 0;
-  }
-  to {
-      top: -14%;
-      opacity: 1;
-  }
-}
+    .success-message {
+        display: none;
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+        padding: 30px;
+        margin: 10px 0;
+        border-radius: 5px;
+        position: absolute;
+        top: -14%;
+        right: 50%;
+        z-index: 600;
+        animation-name: message;
+    }
+    .error-message {
+        display: none;
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+        padding: 30px;
+        margin: 10px 0;
+        border-radius: 5px;
+        position: absolute;
+        top: -14%;
+        right: 50%;
+        z-index: 500;
+    }
 </style>
 <script>
     function calculateAge() {
@@ -66,7 +69,16 @@
             successMessage.style.display = 'none';
         }, 2000);
     }
+
+    function showMessageErr() {
+        var successMessageErr = document.getElementById('error-message');
+        successMessageErr.style.display = 'block';
+        setTimeout(function() {
+            successMessageErr.style.display = 'none';
+        }, 2000);
+    }
 </script>
+
 <body>
     <div class="flex flex-row justify-start items-center bg-pink-300 p-3 head-malasakit">
         <img src="assets/malasakit_logo.png" alt="add" style="width: 100px; margin-left:50px">
@@ -78,10 +90,6 @@
         <li class="hover:bg-pink-200 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel active">
             <img src="assets/add.png" alt="add"><a href="addPatient.php">Add patient</a>
         </li>
-
-        <style>
-
-        </style>
         <!--  others -->
         <li class="hover:bg-pink-200 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
             <img src="assets/onlineforms.png" alt="add">
@@ -113,7 +121,10 @@
     <div class="addpatient-container">
         <span class="text-2xl mb-6">CLIENT INFORMATION SHEET</span>
         <div id="success-message" class="success-message">
-            New record created successfully!
+            <span>New record created successfully!</span>
+        </div>
+        <div id="error-message" class="error-message">
+            <span>Patient already exist!</span>
         </div>
         <div class="addpatient-inputs content contentActive">
             <form method="POST" action="addPatient.php" onsubmit="return validateContactNumber()">
@@ -125,6 +136,7 @@
                 <input type="text" class="ml-1" name="middle_name">
                 <label for="" class="ml-6">Name extension:</label>
                 <select name="name_extension" id="" class="bg-gray-200  p-2 outline-none">
+                    <option value="Jr.">None</option>
                     <option value="Jr.">Jr.</option>
                     <option value="Sr.">Sr.</option>
                 </select>
@@ -296,27 +308,6 @@
                 </div>
             </form>
         </div>
-        <!-- Page 1 end-->
-
-        <!--  Page 2 start-->
-        <!--  <div class="content">
-            <label for="">Name of Companion Upon Admission/Consultation:</label>
-            <input type="text" class="ml-1 mt-6">
-            <label for="">Address of Companion:</label>
-            <input type="text" class="ml-1 mt-6">
-        </div> -->
-        <!--  Page 2 end-->
-        <!--  <div class="content">
-            <h1 class="text-3xl">Next page2</h1>
-        </div>
-        <div class="content">
-            <h1 class="text-3xl">Next page3</h1>
-        </div> -->
-        <!-- <div class="btn-container">
-            <button class="btn-btn Prev" id="prevBtn">
-                < Previous</button>
-                <button class="btn-btn" id="nextBtn">Next ></button>
-        </div> -->
     </div>
 
     <?php
@@ -355,7 +346,13 @@
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
+    }
+    $check_sql = "SELECT * FROM patients WHERE first_name='$first_name' AND last_name='$last_name' AND middle_name='$middle_name' AND date_of_birth='$date_of_birth'";
+    $result = $conn->query($check_sql);
 
+    if ($result->num_rows > 0) {
+        echo "<script>showMessageErr();</script>";
+    } else {
         $sql = "INSERT INTO patients (first_name, last_name, middle_name, name_extension, contact_number, address, date_of_birth, age, sex, civil_status, place_of_birth, religion, educational_attainment, occupation, employment_status, daily_income, monthly_income, sectoral_membership, companion_name, companion_address, companion_contact, admission_date, diagnosis) VALUES ('$first_name', '$last_name', '$middle_name', '$name_extension', '$contact_number', '$address', '$date_of_birth', '$age', '$sex', '$civil_status', '$place_of_birth', '$religion', '$educational_attainment', '$occupation', '$employment_status', '$daily_income', '$monthly_income', '$sectoral_membership', '$companion_name', '$companion_address', '$companion_contact', '$admission_date', '$diagnosis')";
 
         if ($conn->query($sql) === TRUE) {
@@ -363,13 +360,13 @@
         } else {
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
-
-        $conn->close();
     }
+    $conn->close();
+
+
     ?>
 
 </body>
 <script src="js/script.js"></script>
 
 </html>
-
