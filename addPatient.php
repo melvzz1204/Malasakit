@@ -53,12 +53,15 @@
 
     // Validate contact number
     function validateContactNumber() {
-        const contactNumber = document.getElementById("contact_number").value;
+        const contactNumberInput = document.getElementById("contact_number");
+        const contactNumber = contactNumberInput.value;
         const regex = /^\d{11}$/;
         if (!regex.test(contactNumber)) {
             alert("Contact number must be exactly 11 digits and contain only numbers.");
+            contactNumberInput.style.borderColor = "red";
             return false;
         }
+        contactNumberInput.style.borderColor = "green";
         return true;
     }
 </script>
