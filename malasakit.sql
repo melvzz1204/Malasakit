@@ -85,6 +85,7 @@ CREATE TABLE `patients` (
   `admission_date` date,
   `diagnosis` text,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `date_registered` DATE,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

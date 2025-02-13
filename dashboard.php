@@ -55,7 +55,7 @@ $dashboard_data = fetch_dashboard_data($conn);
             <img src="assets/dashboard.png" alt="add"><a href="dashboard.php">Dashboard</a>
         </li>
         <li class="hover:bg-pink-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
-            <img src="assets/add.png" alt="add"><a href="addPatient.php">Add patient</a>
+            <img src="assets/add.png" alt="add"><a href="addPatient.php">Add client</a>
         </li>
         <li class="hover:bg-pink-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
             <img src="assets/onlineforms.png" alt="add">

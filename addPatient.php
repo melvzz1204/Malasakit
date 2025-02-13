@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,100 +9,48 @@
     <link rel="stylesheet" href="css/slidepanel.css">
     <link rel="stylesheet" href="css/addpatient.css">
 </head>
-
-<style>
-    .success-message {
-  display: none;
-  background-color: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
-  padding: 30px;
-  margin: 10px 0;
-  border-radius: 5px;
-  position: absolute;
-  top: -14%;
-  right: 50%;
-  z-index: 600;
-  animation-name: message;
-}
-@keyframes message {
-    from {
-        top: -30%;
-        opacity: 0;
-    }
-    to {
-        top: -14%;
-        opacity: 1;
-    }
-}
-.error-message{
-    display: none;
-    background-color: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
-    padding: 30px;
-    margin: 10px 0;
-    border-radius: 5px;
-    position: absolute;
-    top: -14%;
-    right: 50%;
-    z-index: 500;
-}
-
-</style>
 <script>
-    function calculateAge() {
-        var dob = document.getElementById('date_of_birth').value;
-        var today = new Date();
-        var birthDate = new Date(dob);
-        var age = today.getFullYear() - birthDate.getFullYear();
-        var m = today.getMonth() - birthDate.getMonth();
-        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-            age--;
-        }
-        document.getElementById('age').value = age;
+   function validateContactNumber() {
+    var contactNumber = document.getElementById('contact_number').value;
+    if (contactNumber.length < 11) {
+        alert('Contact number must be 11 digits');
+        contactNumberInput.style.border = '2px solid red';
+        return false;
     }
+    contactNumberInput.style.border = '3px solid red';
+    return true;
+}
 
-    function validateContactNumber() {
-        var contactNumber = document.getElementById('contact_number').value;
-        if (contactNumber.length < 11) {
-            alert('Contact number must be 11 digits');
-            return false;
-        }
-        return true;
-    }
+function showSuccessMessage() {
+    var successMessage = document.getElementById('success-message');
+    successMessage.style.display = 'block';
+    setTimeout(function() {
+        successMessage.style.display = 'none';
+    }, 2000);
+}
 
-    function showSuccessMessage() {
-        var successMessage = document.getElementById('success-message');
-        successMessage.style.display = 'block';
-        setTimeout(function() {
-            successMessage.style.display = 'none';
-        }, 2000);
-    }
-
-    function showMessageErr() {
-        var successMessageErr = document.getElementById('error-message');
-        successMessageErr.style.display = 'block';
-        setTimeout(function() {
-            successMessageErr.style.display = 'none';
-        }, 2000);
-    }
+function showMessageErr() {
+    var successMessageErr = document.getElementById('error-message');
+    successMessageErr.style.display = 'block';
+    setTimeout(function() {
+        successMessageErr.style.display = 'none';
+    }, 2000);
+}
 </script>
 <body>
     <div class="flex flex-row justify-start items-center bg-pink-300 p-3 head-malasakit">
         <img src="assets/malasakit_logo.png" alt="add" style="width: 100px; margin-left:50px">
+    </div>
+    <div class="btn-viewClientList">
+        <a href="clientList.php"><button class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 border border-pink-700 rounded">View Client List</button></a>
     </div>
     <ul class="flex flex-col gap-7 w-1/5 h-svh bg-gray-200 p-5 shadow-xl left-dashboard">
         <li class="hover:bg-pink-200 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
             <img src="assets/dashboard.png" alt="add"><a href="Dashboard.php">Dashboard</a>
         </li>
         <li class="hover:bg-pink-200 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel active">
-            <img src="assets/add.png" alt="add"><a href="addPatient.php">Add patient</a>
+            <img src="assets/add.png" alt="add"><a href="addPatient.php">Add client</a>
         </li>
-
-        <style>
-
-        </style>
         <!--  others -->
         <li class="hover:bg-pink-200 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
             <img src="assets/onlineforms.png" alt="add">
@@ -322,7 +269,6 @@
                 </div>
             </form>
         </div>
-
     </div>
 
     <?php
@@ -350,6 +296,7 @@
         $companion_contact = $_POST['companion_contact'];
         $admission_date = $_POST['admission_date'];
         $diagnosis = $_POST['diagnosis'];
+        $date_registered = date("Y-m-d");
 
         // Calculate age
         $birthDate = new DateTime($date_of_birth);
@@ -361,14 +308,6 @@
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
-
-       /*  $sql = "INSERT INTO patients (first_name, last_name, middle_name, name_extension, contact_number, address, date_of_birth, age, sex, civil_status, place_of_birth, religion, educational_attainment, occupation, employment_status, daily_income, monthly_income, sectoral_membership, companion_name, companion_address, companion_contact, admission_date, diagnosis) VALUES ('$first_name', '$last_name', '$middle_name', '$name_extension', '$contact_number', '$address', '$date_of_birth', '$age', '$sex', '$civil_status', '$place_of_birth', '$religion', '$educational_attainment', '$occupation', '$employment_status', '$daily_income', '$monthly_income', '$sectoral_membership', '$companion_name', '$companion_address', '$companion_contact', '$admission_date', '$diagnosis')";
-
-        if ($conn->query($sql) === TRUE) {
-            echo "<script>showSuccessMessage();</script>";
-        } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
-        } */
         
     // Check if patient already exists
     $check_sql = "SELECT * FROM patients WHERE first_name='$first_name' AND last_name='$last_name' AND middle_name='$middle_name' AND date_of_birth='$date_of_birth'";
@@ -377,7 +316,7 @@
     if ($result->num_rows > 0) {
         echo "<script>showMessageErr();</script>";
     } else {
-        $sql = "INSERT INTO patients (first_name, last_name, middle_name, name_extension, contact_number, address, date_of_birth, age, sex, civil_status, place_of_birth, religion, educational_attainment, occupation, employment_status, daily_income, monthly_income, sectoral_membership, companion_name, companion_address, companion_contact, admission_date, diagnosis) VALUES ('$first_name', '$last_name', '$middle_name', '$name_extension', '$contact_number', '$address', '$date_of_birth', '$age', '$sex', '$civil_status', '$place_of_birth', '$religion', '$educational_attainment', '$occupation', '$employment_status', '$daily_income', '$monthly_income', '$sectoral_membership', '$companion_name', '$companion_address', '$companion_contact', '$admission_date', '$diagnosis')";
+        $sql = "INSERT INTO patients (first_name, last_name, middle_name, name_extension, contact_number, address, date_of_birth, age, sex, civil_status, place_of_birth, religion, educational_attainment, occupation, employment_status, daily_income, monthly_income, sectoral_membership, companion_name, companion_address, companion_contact, admission_date, diagnosis, date_registered) VALUES ('$first_name', '$last_name', '$middle_name', '$name_extension', '$contact_number', '$address', '$date_of_birth', '$age', '$sex', '$civil_status', '$place_of_birth', '$religion', '$educational_attainment', '$occupation', '$employment_status', '$daily_income', '$monthly_income', '$sectoral_membership', '$companion_name', '$companion_address', '$companion_contact', '$admission_date', '$diagnosis', '$date_registered')";
 
         if ($conn->query($sql) === TRUE) {
             echo "<script>showSuccessMessage();</script>";

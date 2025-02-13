@@ -48,7 +48,7 @@ select {
 
 .left-dashboard {
   position: fixed;
-  top: 15%;
+  top: 12.5%;
 }
 .addpatient-inputs {
   margin-top: 20px;
@@ -91,4 +91,46 @@ label {
   left: 40%;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
+}
+.success-message {
+  display: none;
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  padding: 30px;
+  margin: 10px 0;
+  border-radius: 5px;
+  position: absolute;
+  top: -14%;
+  right: 50%;
+  z-index: 600;
+  animation-name: message;
+}
+@keyframes message {
+    from {
+        top: -30%;
+        opacity: 0;
+    }
+    to {
+        top: -14%;
+        opacity: 1;
+    }
+}
+.error-message{
+  display: none;
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  padding: 30px;
+  margin: 10px 0;
+  border-radius: 5px;
+  position: absolute;
+  top: -14%;
+  right: 50%;
+  z-index: 500;
+}
+.btn-viewClientList{
+  position: absolute;
+  top: 15%;
+  right: 5%;
 }
