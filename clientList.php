@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,19 +12,46 @@
     <script>
         // Function to hide the message after 1 second
         function hideMessage() {
-    const messageDiv = document.getElementById('message');
-    if (messageDiv) {
-        setTimeout(() => {
-            messageDiv.style.opacity = '0'; // Fade out
-            setTimeout(() => {
-                messageDiv.style.display = 'none'; // Hide after fade
-            }, 500); // Wait for the fade-out to complete
-        }, 1000); // Wait 1 second before starting the fade
-    }
-}
+            const messageDiv = document.getElementById('message');
+            if (messageDiv) {
+                setTimeout(() => {
+                    messageDiv.style.opacity = '0'; // Fade out
+                    setTimeout(() => {
+                        messageDiv.style.display = 'none'; // Hide after fade
+                    }, 500); // Wait for the fade-out to complete
+                }, 1000); // Wait 1 second before starting the fade
+            }
+        }
 
         // Call the function when the page loads
         window.onload = hideMessage;
+    </script>
+    <script>
+        // Wait for the DOM to load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Live Search Functionality
+            const searchBar = document.getElementById('searchBar');
+            if (searchBar) {
+                searchBar.addEventListener('input', function() {
+                    const searchQuery = this.value.toLowerCase(); // Get the search query
+                    const rows = document.querySelectorAll('tbody tr'); // Get all table rows
+
+                    rows.forEach(row => {
+                        const firstName = row.querySelector('td:nth-child(1)').textContent.toLowerCase(); // First Name column
+                        const lastName = row.querySelector('td:nth-child(2)').textContent.toLowerCase(); // Last Name column
+
+                        // Show or hide rows based on the search query
+                        if (firstName.includes(searchQuery) || lastName.includes(searchQuery)) {
+                            row.style.display = ''; // Show the row
+                        } else {
+                            row.style.display = 'none'; // Hide the row
+                        }
+                    });
+                });
+            } else {
+                console.error('Search bar element not found!');
+            }
+        });
     </script>
     <style>
         #message {
@@ -32,41 +60,45 @@
             right: 11%;
             top: 15%;
         }
+
         .fr {
             position: relative;
         }
+
         .head-malasakit {
             position: relative;
         }
-        .maincontainerHead{
+
+        .maincontainerHead {
             display: flex;
             justify-content: space-between;
         }
     </style>
 </head>
+
 <body class="bg-gray-100">
-<div class="flex flex-row justify-start items-center bg-pink-300 p-3 head-malasakit fr">
+    <div class="flex flex-row justify-start items-center bg-pink-300 p-3 head-malasakit fr">
         <img src="assets/malasakit_logo.png" alt="add" style="width: 100px; margin-left:50px">
     </div>
     <div class="container mx-auto px-4 py-10 ">
-<div class="maincontainerHead">
-    <h1 class="text-3xl font-bold text-pink-800 mb-8">Client List</h1>
-    <div>
-        <div class="relative w-full max-w-md">
-    <input 
-      type="text" 
-      placeholder="Search..." 
-      class="w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-full shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"/>
-            <button 
-                class="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-blue-500">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m0 0a8 8 0 1 0-11.3 0 8 8 0 0 0 11.3 0z"></path>
-                </svg>
-            </button>
+        <div class="maincontainerHead">
+            <h1 class="text-3xl font-bold text-pink-800 mb-8">Client List</h1>
+            <div>
+                <div class="relative w-full max-w-md">
+                    <input
+                        type="text"
+                        placeholder="Search Last name"
+                        id="searchBar"
+                        class="w-auto px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-full shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                    <button
+                        class="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-blue-500">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m0 0a8 8 0 1 0-11.3 0 8 8 0 0 0 11.3 0z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-
         <?php
         if (isset($_GET['message'])) {
             echo "<div id='message' class='bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4' role='alert'>";
@@ -90,7 +122,7 @@
                 <tbody class="divide-y divide-gray-200">
                     <?php
                     include_once('conn/conn.php');
-                    $sql = "SELECT id, first_name, last_name, middle_name, date_of_birth, date_registered, address FROM patients";
+                    $sql = "SELECT id, first_name, last_name, middle_name, date_of_birth, date_registered, address FROM patients ORDER BY date_registered DESC";
                     $stmt = $conn->prepare($sql);
                     $stmt->execute();
                     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -105,7 +137,7 @@
                             echo "<td class='py-4 px-6 text-sm text-gray-900'>" . htmlspecialchars($row['address']) . "</td>";
                             echo "<td class='py-4 px-6 text-sm text-gray-900'>" . htmlspecialchars($row['date_registered']) . "</td>";
                             echo "<td class='py-4 px-6 text-sm text-gray-900 flex space-x-2'>";
-                            echo "<a href='view.php?id=" . htmlspecialchars($row['id']) . "' class='bg-pink-500 text-white px-4 py-2 rounded-md hover:bg-pink-600 transition-colors'>View</a>";
+                            echo "<a href='viewPatient.php?id=" . htmlspecialchars($row['id']) . "' class='bg-pink-500 text-white px-4 py-2 rounded-md hover:bg-pink-600 transition-colors'>View</a>";
                             echo "<a href='delete.php?id=" . htmlspecialchars($row['id']) . "' class='bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors' onclick='return confirm(\"Are you sure you want to delete this record?\");'>Delete</a>";
                             echo "</td>";
                             echo "</tr>";
@@ -119,4 +151,5 @@
         </div>
     </div>
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,33 +11,34 @@
     <link rel="stylesheet" href="css/addpatient.css">
 </head>
 <script>
-   function validateContactNumber() {
-    var contactNumber = document.getElementById('contact_number').value;
-    if (contactNumber.length < 11) {
-        alert('Contact number must be 11 digits');
-        contactNumberInput.style.border = '2px solid red';
-        return false;
+    function validateContactNumber() {
+        var contactNumber = document.getElementById('contact_number').value;
+        if (contactNumber.length < 11) {
+            alert('Contact number must be 11 digits');
+            contactNumberInput.style.border = '2px solid red';
+            return false;
+        }
+        contactNumberInput.style.border = '3px solid red';
+        return true;
     }
-    contactNumberInput.style.border = '3px solid red';
-    return true;
-}
 
-function showSuccessMessage() {
-    var successMessage = document.getElementById('success-message');
-    successMessage.style.display = 'block';
-    setTimeout(function() {
-        successMessage.style.display = 'none';
-    }, 2000);
-}
+    function showSuccessMessage() {
+        var successMessage = document.getElementById('success-message');
+        successMessage.style.display = 'block';
+        setTimeout(function() {
+            successMessage.style.display = 'none';
+        }, 2000);
+    }
 
-function showMessageErr() {
-    var successMessageErr = document.getElementById('error-message');
-    successMessageErr.style.display = 'block';
-    setTimeout(function() {
-        successMessageErr.style.display = 'none';
-    }, 2000);
-}
+    function showMessageErr() {
+        var successMessageErr = document.getElementById('error-message');
+        successMessageErr.style.display = 'block';
+        setTimeout(function() {
+            successMessageErr.style.display = 'none';
+        }, 2000);
+    }
 </script>
+
 <body>
     <div class="flex flex-row justify-start items-center bg-pink-300 p-3 head-malasakit">
         <img src="assets/malasakit_logo.png" alt="add" style="width: 100px; margin-left:50px">
@@ -97,7 +99,7 @@ function showMessageErr() {
                 <input type="text" class="ml-1" name="middle_name">
                 <label for="" class="ml-6">Name extension:</label>
                 <select name="name_extension" id="" class="bg-gray-200  p-2 outline-none">
-                     <option value="Jr.">None</option>
+                    <option value="Jr.">None</option>
                     <option value="Jr.">Jr.</option>
                     <option value="Sr.">Sr.</option>
                 </select>
@@ -308,28 +310,30 @@ function showMessageErr() {
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
-        
-    // Check if patient already exists
-    $check_sql = "SELECT * FROM patients WHERE first_name='$first_name' AND last_name='$last_name' AND middle_name='$middle_name' AND date_of_birth='$date_of_birth'";
-    $result = $conn->query($check_sql);
 
-    if ($result->num_rows > 0) {
-        echo "<script>showMessageErr();</script>";
-    } else {
-        $sql = "INSERT INTO patients (first_name, last_name, middle_name, name_extension, contact_number, address, date_of_birth, age, sex, civil_status, place_of_birth, religion, educational_attainment, occupation, employment_status, daily_income, monthly_income, sectoral_membership, companion_name, companion_address, companion_contact, admission_date, diagnosis, date_registered) VALUES ('$first_name', '$last_name', '$middle_name', '$name_extension', '$contact_number', '$address', '$date_of_birth', '$age', '$sex', '$civil_status', '$place_of_birth', '$religion', '$educational_attainment', '$occupation', '$employment_status', '$daily_income', '$monthly_income', '$sectoral_membership', '$companion_name', '$companion_address', '$companion_contact', '$admission_date', '$diagnosis', '$date_registered')";
+        // Check if patient already exists
+        $check_sql = "SELECT * FROM patients WHERE first_name='$first_name' AND last_name='$last_name' AND middle_name='$middle_name' AND date_of_birth='$date_of_birth'";
+        $result = $conn->query($check_sql);
 
-        if ($conn->query($sql) === TRUE) {
-            echo "<script>showSuccessMessage();</script>";
+        if ($result->num_rows > 0) {
+            echo "<script>showMessageErr();</script>";
         } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
+            $sql = "INSERT INTO patients (first_name, last_name, middle_name, name_extension, contact_number, address, date_of_birth, age, sex, civil_status, place_of_birth, religion, educational_attainment, occupation, employment_status, daily_income, monthly_income, sectoral_membership, companion_name, companion_address, companion_contact, admission_date, diagnosis, date_registered) VALUES ('$first_name', '$last_name', '$middle_name', '$name_extension', '$contact_number', '$address', '$date_of_birth', '$age', '$sex', '$civil_status', '$place_of_birth', '$religion', '$educational_attainment', '$occupation', '$employment_status', '$daily_income', '$monthly_income', '$sectoral_membership', '$companion_name', '$companion_address', '$companion_contact', '$admission_date', '$diagnosis', '$date_registered')";
+
+            if ($conn->query($sql) === TRUE) {
+                echo "<script>showSuccessMessage();</script>";
+            } else {
+                echo "Error: " . $sql . "<br>" . $conn->error;
+            }
         }
-    }
         $conn->close();
     }
+    $employment_status = isset($_POST['employment_status']) ? implode(", ", $_POST['employment_status']) : "";
+    $sectoral_membership = isset($_POST['sectoral_membership']) ? implode(", ", $_POST['sectoral_membership']) : "";
+
     ?>
 
 </body>
 <script src="js/script.js"></script>
 
 </html>
-
