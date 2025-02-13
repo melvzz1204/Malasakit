@@ -107,16 +107,16 @@ label {
   animation-name: message;
 }
 @keyframes message {
-    from {
-        top: -30%;
-        opacity: 0;
-    }
-    to {
-        top: -14%;
-        opacity: 1;
-    }
+  from {
+    top: -30%;
+    opacity: 0;
+  }
+  to {
+    top: -14%;
+    opacity: 1;
+  }
 }
-.error-message{
+.error-message {
   display: none;
   background-color: #f8d7da;
   color: #721c24;
@@ -129,8 +129,9 @@ label {
   right: 50%;
   z-index: 500;
 }
-.btn-viewClientList{
+/* .btn-viewClientList {
   position: absolute;
   top: 15%;
-  right: 5%;
+  left: 0;
 }
+ */

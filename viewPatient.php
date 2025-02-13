@@ -65,10 +65,13 @@ if (!is_dir($uploadDir)) {
 
 <body>
     <div class="flex flex-row justify-start items-center bg-pink-300 p-3">
-        <img src="assets/malasakit_logo.png" alt="add" style="width: 100px; margin-left:50px">
+        <a href="dashboard.php"><img src=" assets/malasakit_logo.png" alt="add" style="width: 100px; margin-left:50px"></a>
     </div>
     <div class="max-w-2xl mx-auto bg-white shadow-md rounded-lg p-6 relative">
-        <h1 class="text-2xl font-bold text-pink-700 mb-4">Client Details</h1>
+        <div class="flex items-center justify-between">
+            <h1 class="text-2xl text-pink-700 mb-4">Client Details</h1>
+            <a href="clientList.php" class="block text-center bg-gray-700 text-white p-1 rounded-md hover:bg-gray-600 text-sm transition w-20">Back to List</a>
+        </div>
         <!-- Image Upload Form -->
         <div class="mb-4 text-center mt-0 flex flex-col items-center gap-4">
             <?php if (!empty($patient['image_path'])): ?>
@@ -88,13 +91,12 @@ if (!is_dir($uploadDir)) {
                 hideErrorMessage();
             </script>
         <?php endif; ?>
-        <a href="clientList.php" class="block text-center bg-pink-500 text-white p-1 mt-4 rounded-md hover:bg-pink-600 transition w-40">Back to List</a>
         <div class="grid grid-cols-2 gap-4">
             <?php
             foreach ($patient as $key => $value) {
                 if ($key !== 'image_path') { // Exclude image path from details
-                    echo "<div class='border-b py-2'><strong class='text-gray-700'>" . ucfirst(str_replace('_', ' ', $key)) . ":</strong></div>";
-                    echo "<div class='border-b py-2 text-gray-900'>" . htmlspecialchars($value) . "</div>";
+                    echo "<div class='border-b py-2'><p class='text-gray-700 opacity-70'>" . ucfirst(str_replace('_', ' ', $key)) . ":</p></div>";
+                    echo "<div class='border-b py-2 font-medium '>" . htmlspecialchars($value) . "</div>";
                 }
             }
             ?>
