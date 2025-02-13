@@ -24,7 +24,34 @@
 
         // Call the function when the page loads
         window.onload = hideMessage;
-    </script>
+</script>
+<script>
+    // Wait for the DOM to load
+    document.addEventListener('DOMContentLoaded', function () {
+        // Live Search Functionality
+        const searchBar = document.getElementById('searchBar');
+        if (searchBar) {
+            searchBar.addEventListener('input', function () {
+                const searchQuery = this.value.toLowerCase(); // Get the search query
+                const rows = document.querySelectorAll('tbody tr'); // Get all table rows
+
+                rows.forEach(row => {
+                    const firstName = row.querySelector('td:nth-child(1)').textContent.toLowerCase(); // First Name column
+                    const lastName = row.querySelector('td:nth-child(2)').textContent.toLowerCase(); // Last Name column
+
+                    // Show or hide rows based on the search query
+                    if (firstName.includes(searchQuery) || lastName.includes(searchQuery)) {
+                        row.style.display = ''; // Show the row
+                    } else {
+                        row.style.display = 'none'; // Hide the row
+                    }
+                });
+            });
+        } else {
+            console.error('Search bar element not found!');
+        }
+    });
+</script>
     <style>
         #message {
             transition: opacity 0.5s ease-out;
@@ -56,6 +83,7 @@
     <input 
       type="text" 
       placeholder="Search..." 
+      id="searchBar"
       class="w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-full shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"/>
             <button 
                 class="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-blue-500">
@@ -66,7 +94,6 @@
         </div>
     </div>
 </div>
-
         <?php
         if (isset($_GET['message'])) {
             echo "<div id='message' class='bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4' role='alert'>";
@@ -90,7 +117,7 @@
                 <tbody class="divide-y divide-gray-200">
                     <?php
                     include_once('conn/conn.php');
-                    $sql = "SELECT id, first_name, last_name, middle_name, date_of_birth, date_registered, address FROM patients";
+                    $sql = "SELECT id, first_name, last_name, middle_name, date_of_birth, date_registered, address FROM patients ORDER BY date_registered DESC";
                     $stmt = $conn->prepare($sql);
                     $stmt->execute();
                     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
