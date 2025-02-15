@@ -84,14 +84,6 @@ $dashboard_data = fetch_dashboard_data($conn);
         </li>
     </ul>
     <div class="dashboard">
-        <div class="card approval">
-            <h2>For Approval</h2>
-            <p><?php echo $dashboard_data['for_approval']; ?></p>
-        </div>
-        <div class="card processing">
-            <h2>For Processing</h2>
-            <p><?php echo $dashboard_data['for_processing']; ?></p>
-        </div>
         <div class="card pending">
             <h2>Pending</h2>
             <p><?php echo $dashboard_data['pending']; ?></p>

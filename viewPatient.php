@@ -75,6 +75,31 @@ if (!is_dir($uploadDir)) {
             toggleIcon.classList.add('fa-eye-slash');
         }
     }
+
+    // Function to show/hide amount input based on status selection
+    function toggleAmountInput() {
+        const statusSelect = document.querySelector('.select-status');
+        const amountInput = document.querySelector('.amount-inpt').parentElement;
+        const reasonTextarea = document.querySelector('textarea').parentElement;
+
+        statusSelect.addEventListener('change', function() {
+            if (statusSelect.value === 'Released') {
+                amountInput.style.display = 'block';
+                reasonTextarea.style.display = 'none';
+            } else if (statusSelect.value === 'Pending') {
+                amountInput.style.display = 'none';
+                reasonTextarea.style.display = 'block';
+            } else {
+                amountInput.style.display = 'none';
+                reasonTextarea.style.display = 'none';
+            }
+        });
+    }
+
+    // Call the function on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        toggleAmountInput();
+    });
 </script>
 
 <body>
@@ -111,6 +136,31 @@ if (!is_dir($uploadDir)) {
             display: flex;
             align-items: center;
             justify-content: space-between;
+        }
+
+        .amount-inpt {
+            outline: none;
+            border: pink 1px solid;
+            height: 2.3rem;
+            text-align: center;
+            padding: 5px
+        }
+
+        textarea {
+            outline: none;
+            border: 1px solid palevioletred;
+            border-radius: 5px;
+            padding: 10px;
+            width: 100%;
+            height: 100px;
+            resize: vertical;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+
+        textarea::placeholder {
+            color: #aaa;
         }
     </style>
     <div class="patientInfo">
@@ -160,19 +210,25 @@ if (!is_dir($uploadDir)) {
                 <option value="Pending" class="status-option">Pending</option>
                 <option value="For Approval" class="status-option">For referral</option>
             </select>
-            <div>
+            <div style="display: none;">
                 <label for="">Amount:</label>
                 <input type="number" class="amount-inpt" placeholder="Enter Amount">
+            </div>
+            <div style="display: none;">
+                <textarea name="" id="" placeholder="Reason of pending"></textarea>
             </div>
         </div>
         <div>
             <button class="p-2 w-30 block text-center bg-pink-700 text-white p-1 rounded-md hover:bg-pink-600 text-sm transition mb-10 w-20">Save</button>
         </div>
         <!-- Toggle Button -->
-        <div class="text-center mb-4">
-            <button onclick="togglePatientDetails()" class="bg-blue-500 text-white text-sm p-2 py-2 rounded-md hover:bg-blue-600 transition">
-                <i id="toggle-icon" class="fas fa-eye"></i>
-            </button>
+        <div class="text-end mb-4">
+            <div onclick="togglePatientDetails()" class="cursor-pointer bg-blue-500 text-white text-sm p-2 py-2 rounded-md hover:bg-blue-600 transition inline-flex items-center">
+                <i class="fas fa-eye" id="toggle-icon"></i>
+                <span class="ml-2">
+                    Hide or Show
+                </span>
+            </div>
         </div>
         <style>
             .amount-inpt {
