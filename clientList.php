@@ -78,7 +78,7 @@
 
 <body class="bg-gray-100">
     <div class="flex flex-row justify-start items-center bg-pink-300 p-3 head-malasakit fr">
-        <img src="assets/malasakit_logo.png" alt="add" style="width: 100px; margin-left:50px">
+        <a href="dashboard.php"><img src="assets/malasakit_logo.png" alt="add" style="width: 100px; margin-left:50px"></a>
     </div>
     <div class="container mx-auto px-4 py-10 ">
         <div class="maincontainerHead">

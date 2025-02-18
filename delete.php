@@ -27,4 +27,3 @@ if (isset($_GET['id'])) {
     header("Location: clientList.php?message=Invalid request");
     exit();
 }
-?>

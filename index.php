@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="flex flex-row justify-start items-center bg-pink-300 p-3 scroll">
         <img src="assets/malasakit_logo.png" alt="add" style="width: 100px; margin-left:50px">
     </div>
-    <form action="index.php" method="POST" class="flex flex-column justify-center align-center ">
+    <form action="dashboard.php" method="POST" class="flex flex-column justify-center align-center ">
         <div class="w-1/3 mt-20 border-2 border-pink-100 p-10 ">
             <h1 class="text-2xl mb-10 ">Welcome, Please Log in</h1>
             <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">

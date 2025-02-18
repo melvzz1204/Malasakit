@@ -82,7 +82,7 @@
     </ul>
     <!-- Page 1 start-->
     <div class="addpatient-container">
-        <span class="text-2xl mb-6">CLIENT INFORMATION SHEET</span>
+        <span class="text-2xl text-start ml-6 mb-6">CLIENT INFORMATION SHEET</span>
         <div id="success-message" class="success-message">
             <span>New record created successfully!</span>
         </div>
