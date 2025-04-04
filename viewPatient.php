@@ -4,8 +4,19 @@ include_once('conn/conn.php');
 $id = $_GET['id'] ?? null; // Get patient ID from URL if available
 $sql = "SELECT * FROM patients WHERE id = ?";
 $stmt = $conn->prepare($sql);
-$stmt->execute([$id]);
-$patient = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if ($stmt) {
+    $success = $stmt->execute([$id]);
+    if ($success) {
+        $patient = $stmt->fetch(PDO::FETCH_ASSOC);
+    } else {
+        echo "<p class='text-red-500 text-center'>Query execution failed.</p>";
+        exit;
+    }
+} else {
+    echo "<p class='text-red-500 text-center'>Prepare failed.</p>";
+    exit;
+}
 
 if (!$patient) {
     echo "<p class='text-red-500 text-center'>Patient not found.</p>";
@@ -15,21 +26,43 @@ if (!$patient) {
 // Handle Image Upload
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["patient_image"])) {
     $target_dir = "uploads/";
+    if (!is_dir($target_dir)) {
+        mkdir($target_dir, 0777, true); // Create directory if it doesn't exist
+    }
     $target_file = $target_dir . basename($_FILES["patient_image"]["name"]);
     $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
     $allowed_types = ["jpg", "jpeg", "png", "gif"];
 
-    if (in_array($imageFileType, $allowed_types) && move_uploaded_file($_FILES["patient_image"]["tmp_name"], $target_file)) {
-        // Update database with image path
-        $update_sql = "UPDATE patients SET image_path = ? WHERE id = ?";
-        $update_stmt = $conn->prepare($update_sql);
-        $update_stmt->execute([$target_file, $id]);
+    // Check if image file is a actual image or fake image
+    $check = getimagesize($_FILES["patient_image"]["tmp_name"]);
+    if ($check === false) {
+        $error_message = "File is not an image.";
+    }
 
-        // Refresh page to show new image
-        header("Location: viewPatient.php?id=$id");
-        exit;
-    } else {
-        $error_message = "Image upload failed. Please choose a file";
+    // Check file size
+    $max_file_size = 10000000; // 2MB
+    if ($_FILES["patient_image"]["size"] > $max_file_size) {
+        $error_message = "Sorry, your file is too large. Maximum file size is 2MB.";
+    }
+
+    // Allow certain file formats
+    if (!in_array($imageFileType, $allowed_types)) {
+        $error_message = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+    }
+
+    if (empty($error_message)) {
+        if (move_uploaded_file($_FILES["patient_image"]["tmp_name"], $target_file)) {
+            // Update database with image path
+            $update_sql = "UPDATE patients SET image_path = ? WHERE id = ?";
+            $update_stmt = $conn->prepare($update_sql);
+            $update_stmt->execute([$target_file, $id]);
+
+            // Refresh page to show new image
+            header("Location: viewPatient.php?id=$id");
+            exit;
+        } else {
+            $error_message = "Sorry, there was an error uploading your file.";
+        }
     }
 }
 $uploadDir = 'uploads/';
@@ -108,7 +141,7 @@ if (!is_dir($uploadDir)) {
     </div>
     <style>
         .patientInfo {
-            width: 50%;
+            width: 100%;
             margin: auto;
             padding: 2rem;
             box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
@@ -162,6 +195,14 @@ if (!is_dir($uploadDir)) {
         textarea::placeholder {
             color: #aaa;
         }
+
+        #error-message {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+        }
     </style>
     <div class="patientInfo">
         <!-- Image Upload Form -->
@@ -193,7 +234,7 @@ if (!is_dir($uploadDir)) {
         </div>
         <div class="mb-10 text-center mt-0 flex flex-col items-center gap-4">
             <?php if (!empty($patient['image_path'])): ?>
-                <img src="<?php echo htmlspecialchars($patient['image_path']); ?>" alt="Patient Image" class="w-40 h-40 object-cover rounded mx-auto">
+                <img src="<?php echo htmlspecialchars($patient['image_path']); ?>" alt="Patient Image" class="w-60 h-60 object-cover rounded mx-auto">
             <?php else: ?>
                 <p class="text-gray-500">No image uploaded.</p>
             <?php endif; ?>
@@ -221,15 +262,7 @@ if (!is_dir($uploadDir)) {
         <div>
             <button class="p-2 w-30 block text-center bg-pink-700 text-white p-1 rounded-md hover:bg-pink-600 text-sm transition mb-10 w-20">Save</button>
         </div>
-        <!-- Toggle Button -->
-        <div class="text-end mb-4">
-            <div onclick="togglePatientDetails()" class="cursor-pointer bg-blue-500 text-white text-sm p-2 py-2 rounded-md hover:bg-blue-600 transition inline-flex items-center">
-                <i class="fas fa-eye" id="toggle-icon"></i>
-                <span class="ml-2">
-                    Hide or Show
-                </span>
-            </div>
-        </div>
+
         <style>
             .amount-inpt {
                 outline: none;
@@ -241,9 +274,9 @@ if (!is_dir($uploadDir)) {
         </style>
         <!-- Error Message -->
         <?php if (isset($error_message)): ?>
-            <p id="error-message" class="text-red-500 text-center bg-red-100 border border-red-500 rounded-lg p-2 mt-2 absolute top-32 right-0"><?php echo htmlspecialchars($error_message); ?></p>
-            <script>
-                hideErrorMessage();
+            <p id="error-message" class="text-red-500 text-center bg-red-100 border p-2"><?php echo htmlspecialchars($error_message); ?></p>
+            <script></script>
+            hideErrorMessage();
             </script>
         <?php endif; ?>
 
@@ -251,9 +284,14 @@ if (!is_dir($uploadDir)) {
         <div id="patient-details" class="grid grid-cols-2 gap-4 text-sm">
             <?php
             foreach ($patient as $key => $value) {
-                if ($key !== 'image_path') { // Exclude image path from details
+                if ($key !== 'image_path') { // Exclude image_path from details
                     echo "<div class='border-b py-2'><p class='text-gray-700 opacity-70'>" . ucfirst(str_replace('_', ' ', $key)) . ":</p></div>";
-                    echo "<div class='border-b py-2 font-medium '>" . htmlspecialchars($value) . "</div>";
+                    // Format daily_income and monthly_income with commas
+                    if ($key == 'daily_income' || $key == 'monthly_income') {
+                        echo "<div class='border-b py-2 font-medium '>" . number_format($value, 2) . "</div>";
+                    } else {
+                        echo "<div class='border-b py-2 font-medium '>" . htmlspecialchars($value) . "</div>";
+                    }
                 }
             }
             ?>

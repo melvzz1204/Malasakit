@@ -86,6 +86,7 @@ CREATE TABLE `patients` (
   `diagnosis` text,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `date_registered` DATE,
+  `image_path` varchar(255) DEFAULT NULL, 
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -136,6 +137,15 @@ ALTER TABLE `patients`
 
 COMMIT;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+CREATE TABLE med_inventory (
+    Drug_Code VARCHAR(255) NOT NULL,
+    Drug_Name VARCHAR(255),
+    Specification_Model VARCHAR(255),
+    Production_Batch VARCHAR(255),
+    Period_Validity DATE,
+    Manufacturer VARCHAR(255),
+    Quantity INT,
+    Unit_Price DECIMAL(10, 2),
+    Amount DECIMAL(10, 2),
+    Remarks TEXT
+);

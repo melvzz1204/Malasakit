@@ -37,7 +37,63 @@
             successMessageErr.style.display = 'none';
         }, 2000);
     }
+
+    function formatNumber(input) {
+        // Remove existing commas
+        let value = input.value.replace(/,/g, '');
+
+        // Allow only numbers and one decimal point
+        value = value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+
+        // Split the value into integer and decimal parts
+        let parts = value.split('.');
+        let integerPart = parts[0];
+        let decimalPart = parts.length > 1 ? '.' + parts[1] : '';
+
+        // Format the integer part with commas
+        integerPart = integerPart.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+        // Combine the integer and decimal parts
+        value = integerPart + decimalPart;
+
+        // Update the input value
+        input.value = value;
+    }
 </script>
+
+<style>
+    #success-message {
+        display: none;
+        background-color: #d4edda;
+        color: #155724;
+        padding: 10px;
+        border-radius: 5px;
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        top: 0;
+        /* Position at the top */
+        left: 0;
+        z-index: 1000;
+        /* Ensure it's on top of other elements */
+    }
+
+    #error-message {
+        display: none;
+        background-color: #f8d7da;
+        color: #721c24;
+        padding: 10px;
+        border-radius: 5px;
+        position: absolute;
+        width: 100%;
+        top: 0;
+        /* Position at the top */
+        left: 0;
+        text-align: center;
+        z-index: 1000;
+        /* Ensure it's on top of other elements */
+    }
+</style>
 
 <body>
     <div class="flex flex-row justify-start items-center bg-pink-300 p-3 head-malasakit">
@@ -81,14 +137,14 @@
         <!--  others -->
     </ul>
     <!-- Page 1 start-->
+    <div id="success-message">
+        <span>New record created successfully!</span>
+    </div>
+    <div id="error-message">
+        <span>Patient already exist!</span>
+    </div>
     <div class="addpatient-container">
         <span class="text-2xl text-start ml-6 mb-6">CLIENT INFORMATION SHEET</span>
-        <div id="success-message" class="success-message">
-            <span>New record created successfully!</span>
-        </div>
-        <div id="error-message" class="error-message">
-            <span>Patient already exist!</span>
-        </div>
         <div class="addpatient-inputs content contentActive">
             <form method="POST" action="addPatient.php" onsubmit="return validateContactNumber()">
                 <label for="" class="ml-6">First name:</label>
@@ -196,81 +252,63 @@
                     </div>
                 </div>
                 <div class="p-3 ml-3 flex gap-4">
-                    <div>
-                        <label for="">Daily income:</label>
-                        <input type="text" class=" w-20" name="daily_income">
-                        <label for="">Monthly income:</label>
-                        <input type="text" class=" w-20" name="monthly_income">
-                    </div>
-                    <div class="flex flex-row">
+                    <div></div>
+                    <label for="">Daily income:</label>
+                    <input type="text" class=" w-20" name="daily_income" id="daily_income" onkeyup="formatNumber(this)" onpaste="formatNumber(this)">
+                    <label for="">Monthly income:</label>
+                    <input type="text" class=" w-20" name="monthly_income" id="monthly_income" onkeyup="formatNumber(this)" onpaste="formatNumber(this)">
+                </div>
+                <div class="flex flex-row">
+                    <div class="flex gap-10">
+                        <label for="">Other sectoral membership:</label>
                         <div class="flex gap-10">
-                            <label for="">Other sectoral membership:</label>
-                            <div class="flex gap-10">
-                                <div class="flex flex-col gap-3">
-                                    <div class="flex gap-3 justify-between">
-                                        <label for="">Senior citizen</label>
-                                        <input type="checkbox" name="sectoral_membership[]" value="Senior citizen">
-                                    </div>
-                                    <div class="flex gap-3 justify-between">
-                                        <label for="">PWD</label>
-                                        <input type="checkbox" name="sectoral_membership[]" value="PWD">
-                                    </div>
-                                    <div class="flex gap-3 justify-between">
-                                        <label for="">Gov employee</label>
-                                        <input type="checkbox" name="sectoral_membership[]" value="Gov employee">
-                                    </div>
-                                    <div class="flex gap-3 justify-between">
-                                        <label for="">Brgy. official</label>
-                                        <input type="checkbox" name="sectoral_membership[]" value="Brgy. official">
-                                    </div>
+                            <div class="flex flex-col gap-3">
+                                <div class="flex gap-3 justify-between w-3/4">
+                                    <label for="">PWD</label>
+                                    <input type="checkbox" name="sectoral_membership[]" value="PWD">
                                 </div>
-                                <div class="flex flex-col gap-3">
-                                    <div class="flex gap-3 justify-between w-3/4">
-                                        <label for="">PWD</label>
-                                        <input type="checkbox" name="sectoral_membership[]" value="PWD">
-                                    </div>
-                                    <div class="flex gap-3 justify-between w-3/4">
-                                        <label for="">Gov employee</label>
-                                        <input type="checkbox" name="sectoral_membership[]" value="Gov employee">
-                                    </div>
-                                    <div class="flex gap-3 justify-between w-3/4">
-                                        <label for="">Brgy. official</label>
-                                        <input type="checkbox" name="sectoral_membership[]" value="Brgy. official">
-                                    </div>
-                                    <div class="flex gap-3 justify-between w-3/4">
-                                        <label for="">Solo parent</label>
-                                        <input type="checkbox" name="sectoral_membership[]" value="Solo parent">
-                                    </div>
-                                    <div>
-                                        <label for="">Others</label>
-                                        <input type="text" class="w-1/2" name="sectoral_membership[]">
-                                    </div>
+                                <div class="flex gap-3 justify-between w-3/4">
+                                    <label for="">Gov employee</label>
+                                    <input type="checkbox" name="sectoral_membership[]" value="Gov employee">
+                                </div>
+                                <div class="flex gap-3 justify-between w-3/4">
+                                    <label for="">Brgy. official</label>
+                                    <input type="checkbox" name="sectoral_membership[]" value="Brgy. official">
+                                </div>
+                                <div class="flex gap-3 justify-between w-3/4">
+                                    <label for="">Solo parent</label>
+                                    <input type="checkbox" name="sectoral_membership[]" value="Solo parent">
+                                </div>
+                                <div>
+                                    <label for="">Others</label>
+                                    <input type="text" class="w-1/2" name="sectoral_membership[]">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="p-3 ml-3 flex gap-4">
-                    <label for="">Name of Companion Upon Admission/Consultation:</label>
-                    <input type="text" class="ml-1" name="companion_name">
-                    <label for="">Address of Companion:</label>
-                    <input type="text" class="ml-1 w-1/5" name="companion_address">
-                </div>
-                <div class="p-3 ml-3 flex gap-4">
-                    <label for="">Campanion Contact No.</label>
-                    <input type="text" class="ml-1 w-1/8" name="companion_contact" id="contact_number">
-                    <label for="" class="ml-6">Date of Admission/Consultation:</label>
-                    <input type="date" class="ml-2 w-40" name="admission_date">
-                </div>
-                <div class="p-3 ml-3 flex gap-4">
-                    <label for="">Patient Diagnosis:</label>
-                    <textarea name="diagnosis" id="" rows="5" cols="40" class="border border-pink-200 mt-2 p-2 outline-none"></textarea>
-                </div>
-                <div class="p-5 btn-submit">
-                    <button type="submit" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 border border-pink-700 rounded">Submit</button>
-                </div>
-            </form>
         </div>
+        <div class="p-3 ml-3 flex gap-4">
+            <label for="">Name of Companion Upon Admission/Consultation:</label>
+            <input type="text" class="ml-1" name="companion_name">
+            <label for="">Address of Companion:</label>
+            <input type="text" class="ml-1 w-1/5" name="companion_address">
+        </div>
+        <div class="p-3 ml-3 flex gap-4">
+            <label for="">Campanion Contact No.</label>
+            <input type="text" class="ml-1 w-1/8" name="companion_contact" id="contact_number">
+            <label for="" class="ml-6">Date of Admission/Consultation:</label>
+            <input type="date" class="ml-2 w-40" name="admission_date">
+        </div>
+        <div class="p-3 ml-3 flex gap-4">
+            <label for="">Patient Diagnosis:</label>
+            <textarea name="diagnosis" id="" rows="5" cols="40" class="border border-pink-200 mt-2 p-2 outline-none"></textarea>
+        </div>
+        <div class="p-5 btn-submit">
+            <button type="submit" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 border border-pink-700 rounded">Submit</button>
+        </div>
+        </form>
+    </div>
     </div>
 
     <?php
@@ -289,10 +327,10 @@
         $religion = $_POST['religion'];
         $educational_attainment = $_POST['educational_attainment'];
         $occupation = $_POST['occupation'];
-        $employment_status = implode(", ", $_POST['employment_status']);
+        $employment_status = isset($_POST['employment_status']) ? implode(", ", $_POST['employment_status']) : "";
         $daily_income = $_POST['daily_income'];
         $monthly_income = $_POST['monthly_income'];
-        $sectoral_membership = implode(", ", $_POST['sectoral_membership']);
+        $sectoral_membership = isset($_POST['sectoral_membership']) ? implode(", ", $_POST['sectoral_membership']) : "";
         $companion_name = $_POST['companion_name'];
         $companion_address = $_POST['companion_address'];
         $companion_contact = $_POST['companion_contact'];

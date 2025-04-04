@@ -72,7 +72,7 @@ $dashboard_data = fetch_dashboard_data($conn);
         </li>
         <li class="hover:bg-pink-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
             <img src="assets/med.png" alt="add">
-            <a href="#">Upload med inventory</a>
+            <a href="uploadMed.php">Upload med inventory</a>
         </li>
         <li class="hover:bg-pink-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
             <img src="assets/settings.png" alt="add">

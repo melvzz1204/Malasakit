@@ -57,8 +57,11 @@
         #message {
             transition: opacity 0.5s ease-out;
             position: absolute;
-            right: 11%;
-            top: 15%;
+            width: 100%;
+            z-index: 500;
+            text-align: center;
+            left: 0;
+            top: 0;
         }
 
         .fr {

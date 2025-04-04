@@ -1,0 +1,15 @@
+{
+  "name": "admin/malasakit",
+  "autoload": {
+    "psr-4": {
+      "Admin\\Malasakit\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "melvzz1204",
+      "email": "137977788+melvzz1204@users.noreply.github.com"
+    }
+  ],
+  "require": {}
+}
