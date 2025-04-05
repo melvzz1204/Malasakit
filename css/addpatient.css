@@ -39,10 +39,6 @@ select {
 .contentActive {
   display: block;
 }
-.left-dashboard {
-  position: fixed;
-  top: 12.5%;
-}
 .addpatient-inputs {
   margin-top: 20px;
 }

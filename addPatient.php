@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="assets/main.css">
     <link rel="stylesheet" href="css/slidepanel.css">
     <link rel="stylesheet" href="css/addpatient.css">
+    <link rel="stylesheet" href="css/slidepanel.css">
 </head>
 <script>
     function validateContactNumber() {
@@ -101,228 +102,256 @@
     }
 </style>
 
+
 <body>
     <div class="flex flex-row justify-start items-center bg-violet-300 p-3 head">
         <div>
             <img src="assets/malasakit_logo.png" alt="add" style="width: 100px; margin-left:50px">
         </div>
         <div class="absolute right-20">
-            <a href="clientList.php"><button class="bg-violet-500 hover:bg-violet-600 text-white font-bold py-2 px-4 border border-violet-700 rounded">View Client List</button></a>
+            <a href="clientList.php">
+                <button
+                    class="bg-violet-500 hover:bg-violet-600 text-white font-semibold py-2 px-5 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 ease-in-out">
+                    View Client List
+                </button>
+            </a>
         </div>
+
     </div>
-    <ul class="flex flex-col gap-7 w-1/5 h-svh bg-violet-200 p-5 shadow-xl left-dashboard mt-3">
-        <li class="hover:bg-violet-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
-            <img src="assets/dashboard.png" alt="add"><a href="Dashboard.php">Dashboard</a>
+    <div class="btnSlide">
+        <img src="assets/rightbtn.png" alt="" class="w-8 h-12 opacity-30 hover:opacity-100 cursor-pointer " id="btnSlide">
+    </div>
+    <ul id="hideSlide"
+        class="fixed left-0 z-[100] h-screen bg-violet-200 p-6 shadow-2xl flex flex-col gap-6 transition-transform duration-300 ease-in-out" style=" top: 100px; width: 20%;">
+
+        <li class=" flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition">
+            <img src="assets/dashboard.png" alt="Dashboard" class="w-5 h-5" />
+            <a href="Dashboard.php" class="text-sm font-medium text-gray-800">Dashboard</a>
         </li>
-        <li class="hover:bg-violet-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel active">
-            <img src="assets/add.png" alt="add"><a href="addPatient.php">Add client</a>
+
+        <li class="flex items-center gap-4 p-3 rounded-lg bg-violet-300 active">
+            <img src="assets/add.png" alt="Add Client" class="w-5 h-5" />
+            <a href="addPatient.php" class="text-sm font-medium text-gray-800">Add Client</a>
         </li>
-        <!--  others -->
-        <li class="hover:bg-violet-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
-            <img src="assets/onlineforms.png" alt="add">
-            <a href="onlineforms.php">Online forms</a>
+
+        <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition">
+            <img src="assets/onlineforms.png" alt="Online Forms" class="w-5 h-5" />
+            <a href="onlineforms.php" class="text-sm font-medium text-gray-800">Online Forms</a>
         </li>
-        <li class="hover:bg-violet-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
-            <img src="assets/useraccount.png" alt="add">
-            <a href="#">User account</a>
+
+        <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition">
+            <img src="assets/useraccount.png" alt="User Account" class="w-5 h-5" />
+            <a href="#" class="text-sm font-medium text-gray-800">User Account</a>
         </li>
-        <li class="hover:bg-violet-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
-            <img src="assets/reports.png" alt="add">
-            <a href="#">Reports</a>
+
+        <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition">
+            <img src="assets/reports.png" alt="Reports" class="w-5 h-5" />
+            <a href="#" class="text-sm font-medium text-gray-800">Reports</a>
         </li>
-        <li class="hover:bg-violet-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
-            <img src="assets/med.png" alt="add">
-            <a href="uploadMed.php">Upload med inventory</a>
+
+        <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition">
+            <img src="assets/med.png" alt="Upload Med Inventory" class="w-5 h-5" />
+            <a href="uploadMed.php" class="text-sm font-medium text-gray-800">Upload Med Inventory</a>
         </li>
-        <li class="hover:bg-violet-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
-            <img src="assets/settings.png" alt="add">
-            <a href="#">Settings</a>
+
+        <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition">
+            <img src="assets/settings.png" alt="Settings" class="w-5 h-5" />
+            <a href="#" class="text-sm font-medium text-gray-800">Settings</a>
         </li>
-        <li class="hover:bg-violet-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
-            <img src="assets/logout.png" alt="add">
-            <a href="#">Logout</a>
+
+        <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-red-300 transition mt-auto">
+            <img src="assets/logout.png" alt="Logout" class="w-5 h-5" />
+            <a href="#" class="text-sm font-medium text-gray-800">Logout</a>
         </li>
-        <!--  others -->
+
     </ul>
-    <!-- Page 1 start-->
+
     <div id="success-message">
         <span>New record created successfully!</span>
     </div>
     <div id="error-message">
         <span>Patient already exist!</span>
     </div>
-    <div class="addpatient-container">
-        <span class="text-2xl text-start ml-6 mb-6">CLIENT INFORMATION SHEET</span>
-        <div class="addpatient-inputs content contentActive">
-            <form method="POST" action="addPatient.php" onsubmit="return validateContactNumber()">
-                <label for="" class="ml-6">First name:</label>
-                <input type="text" required class="ml-1" name="first_name">
-                <label for="" class="ml-6">Last name:</label>
-                <input type="text" required class="ml-1" name="last_name">
-                <label for="" class="ml-6">Middle name:</label>
-                <input type="text" required class="ml-1" name="middle_nam">
-                <label for="" class="ml-6">Name extension:</label>
-                <select name="name_extension" id="" class="bg-gray-200  p-2 outline-none">
-                    <option value="Jr.">None</option>
-                    <option value="Jr.">Jr.</option>
-                    <option value="Sr.">Sr.</option>
-                </select>
-                <div class="mt-8">
-                    <label for="" class="ml-6">Contact number:</label>
-                    <input type="text" class="ml-1" name="contact_number" id="contact_number">
-                    <label for="" class="ml-6">Patient Address:</label>
-                    <input type="text" class="ml-1 w-1/6" name="address" required>
+    <div class="max-w-6xl m-auto p-6 bg-white rounded-xl shadow-md mt-20 z-index -2 ml-80">
+        <h2 class="text-3xl font-semibold mb-6 text-violet-600">Client Information Sheet</h2>
+        <form method="POST" action="addPatient.php" onsubmit="return validateContactNumber()" class="space-y-8">
+
+            <!-- Name Fields -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div>
+                    <label class="block mb-1 font-medium">First Name</label>
+                    <input type="text" name="first_name" required class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-violet-400" />
                 </div>
-                <div class="mt-20 main-option">
-                    <div>
-                        <label for="" class="ml-6">Date of Birth:</label>
-                        <input type="date" class="ml-2 w-40" name="date_of_birth" id="date_of_birth" onchange="calculateAge() required">
-                        <label for="" class="ml-6">Age:</label>
-                        <input type="text" class="ml-1 w-10" name="age" id="age" readonly>
-                    </div>
-                    <div>
-                        <label for="" class="ml-6">Sex:</label>
-                        <select name="sex" id="" class="bg-gray-200 rounded p-2 outline-none">
-                            <option disabled selected value>--Select Option--</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="" class="ml-6">Civil Status:</label>
-                        <select name="civil_status" id="" class="bg-gray-200 rounded p-2 outline-none">
-                            <option disabled selected value>--Select Option--</option>
-                            <option value="Single">Single</option>
-                            <option value="Married">Married</option>
-                            <option value="Widow">Widow</option>
-                        </select>
-                    </div>
+                <div>
+                    <label class="block mb-1 font-medium">Last Name</label>
+                    <input type="text" name="last_name" required class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-violet-400" />
                 </div>
-                <div class="mt-2">
-                    <label for="" class="ml-6">Place of Birth:</label>
-                    <input type="text" class="ml-2 w-40" name="place_of_birth" required>
+                <div>
+                    <label class="block mb-1 font-medium">Middle Name</label>
+                    <input type="text" name="middle_nam" required class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-violet-400" />
                 </div>
-                <div class="mt-20">
-                    <label for="" class="ml-6">Religion:</label>
-                    <input type="text" class="ml-2" name="religion">
-                    <label for="" class="ml-6">Educational Attainment:</label>
-                    <select name="educational_attainment" id="" class="bg-gray-200 rounded p-2 outline-none">
-                        <option disabled selected value>--Select Option--</option>
-                        <option value="Elementary Under Graduate">Elementary Under Graduate</option>
-                        <option value="Elementary Graduate">Elementary Graduate</option>
-                        <option value="High School Under graduate">High School Under graduate</option>
-                        <option value="High School Graduate">High School Graduate</option>
-                        <option value="High School Graduate">College under Graduate</option>
-                        <option value="High School Graduate">College Graduate</option>
+                <div>
+                    <label class="block mb-1 font-medium">Name Extension</label>
+                    <select name="name_extension" class="w-full border rounded-lg p-2 bg-gray-100">
+                        <option value="None">None</option>
+                        <option value="Jr.">Jr.</option>
+                        <option value="Sr.">Sr.</option>
                     </select>
                 </div>
-                <div class="mt-20  p-3 ml-3 flex">
-                    <div>
-                        <label for="">Occupation of Patient:</label>
-                        <input type="text" class="ml-2 w-3/2" name="occupation">
-                    </div>
-                    <div class="flex gap-10 ml-5 p-2">
-                        <div class="flex flex-col gap-3">
-                            <div class="flex gap-3 justify-between">
-                                <label for="">Regular</label>
-                                <input type="checkbox" name="employment_status[]" value="Regular">
-                            </div>
-                            <div class="flex gap-3 justify-between">
-                                <label for="">Job order</label>
-                                <input type="checkbox" name="employment_status[]" value="Job order">
-                            </div>
-                        </div>
-                        <div class="flex flex-col gap-3 ">
-                            <div class="flex gap-3 items-center align-center justify-between">
-                                <label for="">Contractual</label>
-                                <input type="checkbox" name="employment_status[]" value="Contractual">
-                            </div>
-                            <div class="flex gap-3 items-center align-center justify-between">
-                                <label for="">Part-time</label>
-                                <input type="checkbox" name="employment_status[]" value="Part-time">
-                            </div>
-                            <div class="flex gap-3 items-center align-center justify-between">
-                                <label for="">On call</label>
-                                <input type="checkbox" name="employment_status[]" value="On call">
-                            </div>
-                        </div>
-                        <div class="flex flex-col gap-3 ">
-                            <div class="flex gap-3 items-center align-center justify-between">
-                                <label for="">Private employee</label>
-                                <input type="checkbox" name="employment_status[]" value="Private employee">
-                            </div>
-                            <div class="flex gap-3 items-center align-center justify-between">
-                                <label for="">Government employee</label>
-                                <input type="checkbox" name="employment_status[]" value="Government employee">
-                            </div>
-                            <div class="flex gap-3 items-center align-center justify-between">
-                                <label for="">Self employed</label>
-                                <input type="checkbox" name="employment_status[]" value="Self employed">
-                            </div>
-                        </div>
+            </div>
+
+            <!-- Contact and Address -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block mb-1 font-medium">Contact Number</label>
+                    <input type="text" name="contact_number" id="contact_number" class="w-full border rounded-lg p-2" />
+                </div>
+                <div>
+                    <label class="block mb-1 font-medium">Patient Address</label>
+                    <input type="text" name="address" required class="w-full border rounded-lg p-2" />
+                </div>
+            </div>
+
+            <!-- Birth, Age, Sex -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <label class="block mb-1 font-medium">Date of Birth</label>
+                    <input type="date" name="date_of_birth" id="date_of_birth" onchange="calculateAge()" class="w-full border rounded-lg p-2" />
+                </div>
+                <div>
+                    <label class="block mb-1 font-medium">Age</label>
+                    <input type="text" name="age" id="age" readonly class="w-full border rounded-lg p-2 bg-gray-100" />
+                </div>
+                <div>
+                    <label class="block mb-1 font-medium">Sex</label>
+                    <select name="sex" class="w-full border rounded-lg p-2 bg-gray-100">
+                        <option disabled selected>--Select Option--</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Civil Status & Birthplace -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block mb-1 font-medium">Civil Status</label>
+                    <select name="civil_status" class="w-full border rounded-lg p-2 bg-gray-100">
+                        <option disabled selected>--Select Option--</option>
+                        <option value="Single">Single</option>
+                        <option value="Married">Married</option>
+                        <option value="Widow">Widow</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block mb-1 font-medium">Place of Birth</label>
+                    <input type="text" name="place_of_birth" required class="w-full border rounded-lg p-2" />
+                </div>
+            </div>
+
+            <!-- Religion & Education -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block mb-1 font-medium">Religion</label>
+                    <input type="text" name="religion" class="w-full border rounded-lg p-2" />
+                </div>
+                <div>
+                    <label class="block mb-1 font-medium">Educational Attainment</label>
+                    <select name="educational_attainment" class="w-full border rounded-lg p-2 bg-gray-100">
+                        <option disabled selected>--Select Option--</option>
+                        <option>Elementary Under Graduate</option>
+                        <option>Elementary Graduate</option>
+                        <option>High School Under Graduate</option>
+                        <option>High School Graduate</option>
+                        <option>College Under Graduate</option>
+                        <option>College Graduate</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Occupation and Employment Status -->
+            <div class="space-y-4">
+                <div>
+                    <label class="block mb-1 font-medium">Occupation</label>
+                    <input type="text" name="occupation" class="w-full border rounded-lg p-2" />
+                </div>
+                <div>
+                    <label class="block mb-2 font-semibold">Employment Status</label>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
+                        <label><input type="checkbox" name="employment_status[]" value="Regular" /> Regular</label>
+                        <label><input type="checkbox" name="employment_status[]" value="Job order" /> Job order</label>
+                        <label><input type="checkbox" name="employment_status[]" value="Contractual" /> Contractual</label>
+                        <label><input type="checkbox" name="employment_status[]" value="Part-time" /> Part-time</label>
+                        <label><input type="checkbox" name="employment_status[]" value="On call" /> On call</label>
+                        <label><input type="checkbox" name="employment_status[]" value="Private employee" /> Private employee</label>
+                        <label><input type="checkbox" name="employment_status[]" value="Government employee" /> Government employee</label>
+                        <label><input type="checkbox" name="employment_status[]" value="Self employed" /> Self employed</label>
                     </div>
                 </div>
-                <div class="ml-6 flex gap-4">
-                    <div><label for="">Daily income:</label>
-                        <input type="text" required class=" w-20" name="daily_income" id="daily_income" onkeyup="formatNumber(this)" onpaste="formatNumber(this) ">
-                    </div>
-                    <div>
-                        <label for="">Monthly income:</label>
-                        <input type="text" required class=" w-20" name="monthly_income" id="monthly_income" onkeyup="formatNumber(this)" onpaste="formatNumber(this)">
-                    </div>
-                    <div class="flex flex-row">
-                        <div class="flex gap-10">
-                            <label for="">Other sectoral membership:</label>
-                            <div class="flex gap-10">
-                                <div class="flex flex-col gap-3">
-                                    <div class="flex gap-3 justify-between w-3/4">
-                                        <label for="">PWD</label>
-                                        <input type="checkbox" name="sectoral_membership[]" value="PWD">
-                                    </div>
-                                    <div class="flex gap-3 justify-between w-3/4">
-                                        <label for="">Gov employee</label>
-                                        <input type="checkbox" name="sectoral_membership[]" value="Gov employee">
-                                    </div>
-                                    <div class="flex gap-3 justify-between w-3/4">
-                                        <label for="">Brgy. official</label>
-                                        <input type="checkbox" name="sectoral_membership[]" value="Brgy. official">
-                                    </div>
-                                    <div class="flex gap-3 justify-between w-3/4">
-                                        <label for="">Solo parent</label>
-                                        <input type="checkbox" name="sectoral_membership[]" value="Solo parent">
-                                    </div>
-                                    <div>
-                                        <label for="">Others</label>
-                                        <input type="text" class="w-1/2" name="sectoral_membership[]">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            </div>
+
+            <!-- Income -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block mb-1 font-medium">Daily Income</label>
+                    <input type="text" name="daily_income" id="daily_income" required class="w-full border rounded-lg p-2" onkeyup="formatNumber(this)" />
                 </div>
-        </div>
-        <div class="p-3 ml-3 flex gap-4 mt-20">
-            <label for="">Name of Companion Upon Admission/Consultation:</label>
-            <input type="text" class="ml-1" name="companion_name">
-            <label for="">Address of Companion:</label>
-            <input type="text" class="ml-1 w-1/5" name="companion_address">
-        </div>
-        <div class="p-3 ml-3 flex gap-4">
-            <label for="">Campanion Contact No.</label>
-            <input type="text" class="ml-1 w-1/8" name="companion_contact" id="contact_number">
-            <label for="" class="ml-6">Date of Admission/Consultation:</label>
-            <input type="date" class="ml-2 w-40" name="admission_date">
-        </div>
-        <div class="p-3 ml-3 flex gap-4 mt-20">
-            <label for="">Patient Diagnosis:</label>
-            <textarea name="diagnosis" id="" rows="5" cols="40" class="border border-violet-200 mt-2 p-2 outline-none"></textarea>
-        </div>
-        <div class="p-5 btn-submit">
-            <button type="submit" class="bg-violet-500 hover:bg-violet-600 text-white font-bold py-2 px-4 border border-violet-700 rounded">Submit</button>
-        </div>
+                <div>
+                    <label class="block mb-1 font-medium">Monthly Income</label>
+                    <input type="text" name="monthly_income" id="monthly_income" required class="w-full border rounded-lg p-2" onkeyup="formatNumber(this)" />
+                </div>
+            </div>
+
+            <!-- Sectoral Membership -->
+            <div>
+                <label class="block mb-2 font-semibold">Other Sectoral Membership</label>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
+                    <label><input type="checkbox" name="sectoral_membership[]" value="PWD" /> PWD</label>
+                    <label><input type="checkbox" name="sectoral_membership[]" value="Gov employee" /> Gov employee</label>
+                    <label><input type="checkbox" name="sectoral_membership[]" value="Brgy. official" /> Brgy. official</label>
+                    <label><input type="checkbox" name="sectoral_membership[]" value="Solo parent" /> Solo parent</label>
+                    <label class="col-span-2 md:col-span-1">
+                        <span>Others:</span>
+                        <input type="text" name="sectoral_membership[]" class="w-full border rounded-lg p-2 mt-1" />
+                    </label>
+                </div>
+            </div>
+
+            <!-- Companion Details -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block mb-1 font-medium">Companion Name</label>
+                    <input type="text" name="companion_name" class="w-full border rounded-lg p-2" />
+                </div>
+                <div>
+                    <label class="block mb-1 font-medium">Companion Address</label>
+                    <input type="text" name="companion_address" class="w-full border rounded-lg p-2" />
+                </div>
+                <div>
+                    <label class="block mb-1 font-medium">Companion Contact No.</label>
+                    <input type="text" name="companion_contact" class="w-full border rounded-lg p-2" />
+                </div>
+                <div>
+                    <label class="block mb-1 font-medium">Date of Admission/Consultation</label>
+                    <input type="date" name="admission_date" class="w-full border rounded-lg p-2" />
+                </div>
+            </div>
+
+            <!-- Diagnosis -->
+            <div>
+                <label class="block mb-1 font-medium">Patient Diagnosis</label>
+                <textarea name="diagnosis" rows="4" class="w-full border rounded-lg p-2"></textarea>
+            </div>
+
+            <!-- Submit -->
+            <div class="text-right">
+                <button type="submit" class="bg-violet-600 hover:bg-violet-700 text-white font-bold py-2 px-6 rounded-lg shadow-md transition duration-200">
+                    Submit
+                </button>
+            </div>
         </form>
     </div>
-    </div>
+
 
     <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST") {

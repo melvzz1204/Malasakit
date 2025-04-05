@@ -51,37 +51,48 @@ $dashboard_data = fetch_dashboard_data($conn);
             <img src="assets/malasakit_logo.png" alt="add" style="width: 100px; margin-left:50px">
         </div>
     </div>
-    <ul class="flex flex-col gap-10 w-1/5 h-svh bg-violet-200 p-5 shadow-xl">
-        <li class="hover:bg-violet-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 active li-slidepanel">
-            <img src="assets/dashboard.png" alt="add"><a href="dashboard.php">Dashboard</a>
+    <ul id="hideSlide"
+        class="fixed left-0 z-[100] h-screen bg-violet-200 p-6 shadow-2xl flex flex-col gap-6 transition-transform duration-300 ease-in-out" style=" top: 100px; width: 20%; z-index: -1;">
+
+        <li class=" flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition active">
+            <img src="assets/dashboard.png" alt="Dashboard" class="w-5 h-5" />
+            <a href="Dashboard.php" class="text-sm font-medium text-gray-800 ">Dashboard</a>
         </li>
-        <li class="hover:bg-violet-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
-            <img src="assets/add.png" alt="add"><a href="addPatient.php">Add client</a>
+        <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300">
+            <img src="assets/add.png" alt="Add Client" class="w-5 h-5" />
+            <a href="addPatient.php" class="text-sm font-medium text-gray-800">Add Client</a>
         </li>
-        <li class="hover:bg-violet-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
-            <img src="assets/onlineforms.png" alt="add">
-            <a href="#">Online forms</a>
+
+        <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition">
+            <img src="assets/onlineforms.png" alt="Online Forms" class="w-5 h-5" />
+            <a href="onlineforms.php" class="text-sm font-medium text-gray-800">Online Forms</a>
         </li>
-        <li class="hover:bg-violet-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
-            <img src="assets/useraccount.png" alt="add">
-            <a href="#">User account</a>
+
+        <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition">
+            <img src="assets/useraccount.png" alt="User Account" class="w-5 h-5" />
+            <a href="#" class="text-sm font-medium text-gray-800">User Account</a>
         </li>
-        <li class="hover:bg-violet-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
-            <img src="assets/reports.png" alt="add">
-            <a href="#">Reports</a>
+
+        <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition">
+            <img src="assets/reports.png" alt="Reports" class="w-5 h-5" />
+            <a href="#" class="text-sm font-medium text-gray-800">Reports</a>
         </li>
-        <li class="hover:bg-violet-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
-            <img src="assets/med.png" alt="add">
-            <a href="uploadMed.php">Upload med inventory</a>
+
+        <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition">
+            <img src="assets/med.png" alt="Upload Med Inventory" class="w-5 h-5" />
+            <a href="uploadMed.php" class="text-sm font-medium text-gray-800">Upload Med Inventory</a>
         </li>
-        <li class="hover:bg-violet-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
-            <img src="assets/settings.png" alt="add">
-            <a href="#">Settings</a>
+
+        <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition">
+            <img src="assets/settings.png" alt="Settings" class="w-5 h-5" />
+            <a href="#" class="text-sm font-medium text-gray-800">Settings</a>
         </li>
-        <li class="hover:bg-violet-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
-            <img src="assets/logout.png" alt="add">
-            <a href="#">Logout</a>
+
+        <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-red-300 transition mt-auto">
+            <img src="assets/logout.png" alt="Logout" class="w-5 h-5" />
+            <a href="#" class="text-sm font-medium text-gray-800">Logout</a>
         </li>
+
     </ul>
     <div class="dashboard">
         <div class="card pending">
