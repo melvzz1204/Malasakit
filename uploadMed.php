@@ -21,7 +21,7 @@
         if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["excelFile"])) {
             $target_dir = "uploads/";
             if (!is_dir($target_dir)) {
-                mkdir($target_dir, 0777, true); // Create the uploads directory if it doesn't exist
+                mkdir($target_dir, 0777, true); // Create uploads directory
             }
             $target_file = $target_dir . basename($_FILES["excelFile"]["name"]);
             $fileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
@@ -31,7 +31,15 @@
                 echo "<p class='text-red-500'>Only Excel files (.xls, .xlsx) are allowed.</p>";
             } else {
                 if (move_uploaded_file($_FILES["excelFile"]["tmp_name"], $target_file)) {
-                    echo "<p class='text-green-500'>The file " . htmlspecialchars(basename($_FILES["excelFile"]["name"])) . " has been uploaded.</p>";
+                    echo "<p id='success-message' class='text-green-800 border-2 border-pink-200 absolute top-0 bg-pink-100 w-full text-center left-0 p-3'>The file " . htmlspecialchars(basename($_FILES["excelFile"]["name"])) . " has been uploaded.</p>";
+                    echo "<script>
+                        setTimeout(() => {
+                            const message = document.getElementById('success-message');
+                            if (message) {
+                                message.style.display = 'none';
+                            }
+                        }, 2000); 
+                    </script>";
 
                     // Read the Excel file
                     require_once __DIR__ . '/vendor/autoload.php';
@@ -54,8 +62,6 @@
                             'Remarks' => $row[9],
                         ]);
                     }
-
-                    echo "<p class='text-green-500'>Data has been saved to the database.</p>";
                 } else {
                     echo "<p class='text-red-500'>Sorry, there was an error uploading your file.</p>";
                 }
@@ -70,7 +76,7 @@
                 <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="excelFile" type="file" name="excelFile" required>
             </div>
             <div class="flex items-center justify-between">
-                <button class="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                <button class="bg-violet-500 hover:bg-violet-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                     Upload
                 </button>
             </div>

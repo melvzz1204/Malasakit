@@ -136,7 +136,7 @@ if (!is_dir($uploadDir)) {
 </script>
 
 <body>
-    <div class="flex flex-row justify-start items-center bg-pink-300 p-3">
+    <div class="flex flex-row justify-start items-center bg-violet-300 p-3">
         <a href="dashboard.php"><img src=" assets/malasakit_logo.png" alt="add" style="width: 100px; margin-left:50px"></a>
     </div>
     <style>
@@ -158,7 +158,7 @@ if (!is_dir($uploadDir)) {
             outline: none;
             padding: 6px;
             width: 25%;
-            border: 1px solid palevioletred;
+            border: 1px solid black;
             font-weight: 600;
             border-radius: 5px;
             color: black;
@@ -173,7 +173,7 @@ if (!is_dir($uploadDir)) {
 
         .amount-inpt {
             outline: none;
-            border: pink 1px solid;
+            border: violet 1px solid;
             height: 2.3rem;
             text-align: center;
             padding: 5px
@@ -203,6 +203,11 @@ if (!is_dir($uploadDir)) {
             width: 100%;
             text-align: center;
         }
+
+        .active {
+            background-color: #e5e7eb;
+            color: #4b5563;
+        }
     </style>
     <div class="patientInfo">
         <!-- Image Upload Form -->
@@ -210,24 +215,24 @@ if (!is_dir($uploadDir)) {
             <ul class="ul-head">
                 <div class="flex gap-4">
                     <li>
-                        <button class="border text-center p-2 mt-2 hover:border-pink-600 focus:border-pink-800">
-                            <span class="text-1xl text-pink-700 mb-4">Patient Profile</span>
+                        <button class="border text-center p-2 mt-2 hover:border-violet-600 focus:border-violet-800 active">
+                            <span class="text-1xl text-violet-700 mb-4">Patient Profile</span>
                         </button>
                     </li>
                     <li>
-                        <button class="border text-center p-2 mt-2 hover:border-pink-600 focus:border-pink-800">
-                            <span class="text-1xl text-pink-700 mb-4">Medical Assitant Record</span>
+                        <button class="border text-center p-2 mt-2 hover:border-violet-600 focus:border-violet-800">
+                            <span class="text-1xl text-violet-700 mb-4">Medical Assitant Record</span>
                         </button>
                     </li>
                     <li>
-                        <button class="border text-center p-2 mt-2 hover:border-pink-600 focus:border-pink-800">
-                            <span class="text-1xl text-pink-700 mb-4">Patient requirements</span>
+                        <button class="border text-center p-2 mt-2 hover:border-violet-600 focus:border-violet-800">
+                            <span class="text-1xl text-violet-700 mb-4">Patient requirements</span>
                         </button>
                     </li>
                 </div>
                 <div>
                     <li>
-                        <a href="clientList.php" class="p-2 w-30 block text-center bg-pink-700 text-white p-1 rounded-md hover:bg-pink-600 text-sm transition">Back to List</a>
+                        <a href="clientList.php" class="p-2 w-30 block text-center bg-violet-700 text-white p-1 rounded-md hover:bg-violet-600 text-sm transition">Back to List</a>
                     </li>
                 </div>
             </ul>
@@ -240,7 +245,7 @@ if (!is_dir($uploadDir)) {
             <?php endif; ?>
             <form action="" method="post" enctype="multipart/form-data" class="flex flex-col items-center gap-4">
                 <input type="file" name="patient_image" class="opacity-50 cursor-pointer ml-20 text-sm">
-                <button type=" submit" class="bg-pink-500 text-white text-sm p-2 py-2 rounded-md hover:bg-pink-600 transition">Upload Image</button>
+                <button type=" submit" class="bg-violet-500 text-white text-sm p-2 py-2 rounded-md hover:bg-violet-600 transition">Upload Image</button>
             </form>
         </div>
         <div class="pt-5 mb-10 status-container">
@@ -260,13 +265,13 @@ if (!is_dir($uploadDir)) {
             </div>
         </div>
         <div>
-            <button class="p-2 w-30 block text-center bg-pink-700 text-white p-1 rounded-md hover:bg-pink-600 text-sm transition mb-10 w-20">Save</button>
+            <button class="p-2 w-30 block text-center bg-violet-700 text-white p-1 rounded-md hover:bg-violet-600 text-sm transition mb-10 w-20">Save</button>
         </div>
 
         <style>
             .amount-inpt {
                 outline: none;
-                border: pink 1px solid;
+                border: violet 1px solid;
                 height: 2.3rem;
                 text-align: center;
                 padding: 5px

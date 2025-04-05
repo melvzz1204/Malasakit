@@ -47,38 +47,38 @@ $dashboard_data = fetch_dashboard_data($conn);
 
 <body>
     <div>
-        <div class="flex flex-row justify-start items-center bg-pink-300 p-3 scroll">
+        <div class="flex flex-row justify-start items-center bg-violet-300 p-3 scroll">
             <img src="assets/malasakit_logo.png" alt="add" style="width: 100px; margin-left:50px">
         </div>
     </div>
-    <ul class="flex flex-col gap-10 w-1/5 h-svh bg-gray-200 p-5 shadow-xl">
-        <li class="hover:bg-pink-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel active">
+    <ul class="flex flex-col gap-10 w-1/5 h-svh bg-violet-200 p-5 shadow-xl">
+        <li class="hover:bg-violet-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 active li-slidepanel">
             <img src="assets/dashboard.png" alt="add"><a href="dashboard.php">Dashboard</a>
         </li>
-        <li class="hover:bg-pink-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
+        <li class="hover:bg-violet-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
             <img src="assets/add.png" alt="add"><a href="addPatient.php">Add client</a>
         </li>
-        <li class="hover:bg-pink-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
+        <li class="hover:bg-violet-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
             <img src="assets/onlineforms.png" alt="add">
             <a href="#">Online forms</a>
         </li>
-        <li class="hover:bg-pink-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
+        <li class="hover:bg-violet-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
             <img src="assets/useraccount.png" alt="add">
             <a href="#">User account</a>
         </li>
-        <li class="hover:bg-pink-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
+        <li class="hover:bg-violet-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
             <img src="assets/reports.png" alt="add">
             <a href="#">Reports</a>
         </li>
-        <li class="hover:bg-pink-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
+        <li class="hover:bg-violet-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
             <img src="assets/med.png" alt="add">
             <a href="uploadMed.php">Upload med inventory</a>
         </li>
-        <li class="hover:bg-pink-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
+        <li class="hover:bg-violet-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
             <img src="assets/settings.png" alt="add">
             <a href="#">Settings</a>
         </li>
-        <li class="hover:bg-pink-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
+        <li class="hover:bg-violet-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
             <img src="assets/logout.png" alt="add">
             <a href="#">Logout</a>
         </li>
@@ -107,7 +107,7 @@ $dashboard_data = fetch_dashboard_data($conn);
     .chart-container {
         position: absolute;
         top: 30%;
-        left: 24%;
+        left: 35%;
     }
 </style>
 <!-- chart script -->

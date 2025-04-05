@@ -39,13 +39,6 @@ select {
 .contentActive {
   display: block;
 }
-
-.head-malasakit {
-  position: fixed;
-  z-index: 1;
-  width: 250vh;
-}
-
 .left-dashboard {
   position: fixed;
   top: 12.5%;
@@ -91,9 +84,4 @@ label {
   left: 40%;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
-}
-.btn-viewClientList {
-  position: absolute;
-  top: 15%;
-  right: 20%;
 }

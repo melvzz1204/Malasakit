@@ -11,5 +11,9 @@
       "email": "137977788+melvzz1204@users.noreply.github.com"
     }
   ],
-  "require": {}
+  "require": {
+    "illuminate/database": "^12.7",
+    "illuminate/http": "^12.7",
+    "phpoffice/phpspreadsheet": "^4.1"
+  }
 }

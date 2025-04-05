@@ -80,12 +80,13 @@
 </head>
 
 <body class="bg-gray-100">
-    <div class="flex flex-row justify-start items-center bg-pink-300 p-3 head-malasakit fr">
+    <div class="flex flex-row justify-start items-center bg-violet-300 p-3 head-malasakit fr">
         <a href="dashboard.php"><img src="assets/malasakit_logo.png" alt="add" style="width: 100px; margin-left:50px"></a>
+        <a href="dashboard.php" class="text-l">Home</a>
     </div>
     <div class="container mx-auto px-4 py-10 ">
         <div class="maincontainerHead">
-            <h1 class="text-3xl font-bold text-pink-800 mb-8">Client List</h1>
+            <h1 class="text-3xl font-bold text-violet-800 mb-8">Client List</h1>
             <div>
                 <div class="relative w-full max-w-md">
                     <input
@@ -111,7 +112,7 @@
         ?>
         <div class="bg-white shadow-md rounded-lg overflow-hidden">
             <table class="min-w-full">
-                <thead class="bg-pink-100">
+                <thead class="bg-violet-100">
                     <tr>
                         <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">First Name</th>
                         <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Name</th>
@@ -140,7 +141,7 @@
                             echo "<td class='py-4 px-6 text-sm text-gray-900'>" . htmlspecialchars($row['address']) . "</td>";
                             echo "<td class='py-4 px-6 text-sm text-gray-900'>" . htmlspecialchars($row['date_registered']) . "</td>";
                             echo "<td class='py-4 px-6 text-sm text-gray-900 flex space-x-2'>";
-                            echo "<a href='viewPatient.php?id=" . htmlspecialchars($row['id']) . "' class='bg-pink-500 text-white px-4 py-2 rounded-md hover:bg-pink-600 transition-colors'>View</a>";
+                            echo "<a href='viewPatient.php?id=" . htmlspecialchars($row['id']) . "' class='bg-violet-500 text-white px-4 py-2 rounded-md hover:bg-violet-600 transition-colors'>View</a>";
                             echo "<a href='delete.php?id=" . htmlspecialchars($row['id']) . "' class='bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors' onclick='return confirm(\"Are you sure you want to delete this record?\");'>Delete</a>";
                             echo "</td>";
                             echo "</tr>";

@@ -72,10 +72,9 @@
         width: 100%;
         text-align: center;
         top: 0;
-        /* Position at the top */
         left: 0;
         z-index: 1000;
-        /* Ensure it's on top of other elements */
+
     }
 
     #error-message {
@@ -87,50 +86,59 @@
         position: absolute;
         width: 100%;
         top: 0;
-        /* Position at the top */
         left: 0;
         text-align: center;
         z-index: 1000;
-        /* Ensure it's on top of other elements */
+
+    }
+
+    .head {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
     }
 </style>
 
 <body>
-    <div class="flex flex-row justify-start items-center bg-pink-300 p-3 head-malasakit">
-        <img src="assets/malasakit_logo.png" alt="add" style="width: 100px; margin-left:50px">
+    <div class="flex flex-row justify-start items-center bg-violet-300 p-3 head">
+        <div>
+            <img src="assets/malasakit_logo.png" alt="add" style="width: 100px; margin-left:50px">
+        </div>
+        <div class="absolute right-20">
+            <a href="clientList.php"><button class="bg-violet-500 hover:bg-violet-600 text-white font-bold py-2 px-4 border border-violet-700 rounded">View Client List</button></a>
+        </div>
     </div>
-    <div class="btn-viewClientList">
-        <a href="clientList.php"><button class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 border border-pink-700 rounded">View Client List</button></a>
-    </div>
-    <ul class="flex flex-col gap-7 w-1/5 h-svh bg-gray-200 p-5 shadow-xl left-dashboard">
-        <li class="hover:bg-pink-200 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
+    <ul class="flex flex-col gap-7 w-1/5 h-svh bg-violet-200 p-5 shadow-xl left-dashboard mt-3">
+        <li class="hover:bg-violet-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
             <img src="assets/dashboard.png" alt="add"><a href="Dashboard.php">Dashboard</a>
         </li>
-        <li class="hover:bg-pink-200 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel active">
+        <li class="hover:bg-violet-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel active">
             <img src="assets/add.png" alt="add"><a href="addPatient.php">Add client</a>
         </li>
         <!--  others -->
-        <li class="hover:bg-pink-200 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
+        <li class="hover:bg-violet-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
             <img src="assets/onlineforms.png" alt="add">
             <a href="onlineforms.php">Online forms</a>
         </li>
-        <li class="hover:bg-pink-200 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
+        <li class="hover:bg-violet-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
             <img src="assets/useraccount.png" alt="add">
             <a href="#">User account</a>
         </li>
-        <li class="hover:bg-pink-200 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
+        <li class="hover:bg-violet-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
             <img src="assets/reports.png" alt="add">
             <a href="#">Reports</a>
         </li>
-        <li class="hover:bg-pink-200 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
+        <li class="hover:bg-violet-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
             <img src="assets/med.png" alt="add">
-            <a href="#">Upload med inventory</a>
+            <a href="uploadMed.php">Upload med inventory</a>
         </li>
-        <li class="hover:bg-pink-200 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
+        <li class="hover:bg-violet-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
             <img src="assets/settings.png" alt="add">
             <a href="#">Settings</a>
         </li>
-        <li class="hover:bg-pink-200 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
+        <li class="hover:bg-violet-300 rounded -sm w-60 p-2  text-start flex align-center gap-3 li-slidepanel">
             <img src="assets/logout.png" alt="add">
             <a href="#">Logout</a>
         </li>
@@ -148,11 +156,11 @@
         <div class="addpatient-inputs content contentActive">
             <form method="POST" action="addPatient.php" onsubmit="return validateContactNumber()">
                 <label for="" class="ml-6">First name:</label>
-                <input type="text" class="ml-1" name="first_name">
+                <input type="text" required class="ml-1" name="first_name">
                 <label for="" class="ml-6">Last name:</label>
-                <input type="text" class="ml-1" name="last_name">
+                <input type="text" required class="ml-1" name="last_name">
                 <label for="" class="ml-6">Middle name:</label>
-                <input type="text" class="ml-1" name="middle_name">
+                <input type="text" required class="ml-1" name="middle_nam">
                 <label for="" class="ml-6">Name extension:</label>
                 <select name="name_extension" id="" class="bg-gray-200  p-2 outline-none">
                     <option value="Jr.">None</option>
@@ -163,18 +171,19 @@
                     <label for="" class="ml-6">Contact number:</label>
                     <input type="text" class="ml-1" name="contact_number" id="contact_number">
                     <label for="" class="ml-6">Patient Address:</label>
-                    <input type="text" class="ml-1 w-1/6" name="address">
+                    <input type="text" class="ml-1 w-1/6" name="address" required>
                 </div>
-                <div class="mt-8 main-option">
+                <div class="mt-20 main-option">
                     <div>
                         <label for="" class="ml-6">Date of Birth:</label>
-                        <input type="date" class="ml-2 w-40" name="date_of_birth" id="date_of_birth" onchange="calculateAge()">
+                        <input type="date" class="ml-2 w-40" name="date_of_birth" id="date_of_birth" onchange="calculateAge() required">
                         <label for="" class="ml-6">Age:</label>
                         <input type="text" class="ml-1 w-10" name="age" id="age" readonly>
                     </div>
                     <div>
                         <label for="" class="ml-6">Sex:</label>
                         <select name="sex" id="" class="bg-gray-200 rounded p-2 outline-none">
+                            <option disabled selected value>--Select Option--</option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                         </select>
@@ -182,21 +191,23 @@
                     <div>
                         <label for="" class="ml-6">Civil Status:</label>
                         <select name="civil_status" id="" class="bg-gray-200 rounded p-2 outline-none">
+                            <option disabled selected value>--Select Option--</option>
                             <option value="Single">Single</option>
                             <option value="Married">Married</option>
                             <option value="Widow">Widow</option>
                         </select>
                     </div>
-                    <div class="mt-2">
-                        <label for="" class="ml-6">Place of Birth:</label>
-                        <input type="text" class="ml-2 w-60" name="place_of_birth">
-                    </div>
                 </div>
-                <div class="mt-8">
+                <div class="mt-2">
+                    <label for="" class="ml-6">Place of Birth:</label>
+                    <input type="text" class="ml-2 w-40" name="place_of_birth" required>
+                </div>
+                <div class="mt-20">
                     <label for="" class="ml-6">Religion:</label>
                     <input type="text" class="ml-2" name="religion">
                     <label for="" class="ml-6">Educational Attainment:</label>
                     <select name="educational_attainment" id="" class="bg-gray-200 rounded p-2 outline-none">
+                        <option disabled selected value>--Select Option--</option>
                         <option value="Elementary Under Graduate">Elementary Under Graduate</option>
                         <option value="Elementary Graduate">Elementary Graduate</option>
                         <option value="High School Under graduate">High School Under graduate</option>
@@ -205,7 +216,7 @@
                         <option value="High School Graduate">College Graduate</option>
                     </select>
                 </div>
-                <div class="mt-8  p-3 ml-3 flex">
+                <div class="mt-20  p-3 ml-3 flex">
                     <div>
                         <label for="">Occupation of Patient:</label>
                         <input type="text" class="ml-2 w-3/2" name="occupation">
@@ -251,44 +262,46 @@
                         </div>
                     </div>
                 </div>
-                <div class="p-3 ml-3 flex gap-4">
-                    <div></div>
-                    <label for="">Daily income:</label>
-                    <input type="text" class=" w-20" name="daily_income" id="daily_income" onkeyup="formatNumber(this)" onpaste="formatNumber(this)">
-                    <label for="">Monthly income:</label>
-                    <input type="text" class=" w-20" name="monthly_income" id="monthly_income" onkeyup="formatNumber(this)" onpaste="formatNumber(this)">
-                </div>
-                <div class="flex flex-row">
-                    <div class="flex gap-10">
-                        <label for="">Other sectoral membership:</label>
+                <div class="ml-6 flex gap-4">
+                    <div><label for="">Daily income:</label>
+                        <input type="text" required class=" w-20" name="daily_income" id="daily_income" onkeyup="formatNumber(this)" onpaste="formatNumber(this) ">
+                    </div>
+                    <div>
+                        <label for="">Monthly income:</label>
+                        <input type="text" required class=" w-20" name="monthly_income" id="monthly_income" onkeyup="formatNumber(this)" onpaste="formatNumber(this)">
+                    </div>
+                    <div class="flex flex-row">
                         <div class="flex gap-10">
-                            <div class="flex flex-col gap-3">
-                                <div class="flex gap-3 justify-between w-3/4">
-                                    <label for="">PWD</label>
-                                    <input type="checkbox" name="sectoral_membership[]" value="PWD">
-                                </div>
-                                <div class="flex gap-3 justify-between w-3/4">
-                                    <label for="">Gov employee</label>
-                                    <input type="checkbox" name="sectoral_membership[]" value="Gov employee">
-                                </div>
-                                <div class="flex gap-3 justify-between w-3/4">
-                                    <label for="">Brgy. official</label>
-                                    <input type="checkbox" name="sectoral_membership[]" value="Brgy. official">
-                                </div>
-                                <div class="flex gap-3 justify-between w-3/4">
-                                    <label for="">Solo parent</label>
-                                    <input type="checkbox" name="sectoral_membership[]" value="Solo parent">
-                                </div>
-                                <div>
-                                    <label for="">Others</label>
-                                    <input type="text" class="w-1/2" name="sectoral_membership[]">
+                            <label for="">Other sectoral membership:</label>
+                            <div class="flex gap-10">
+                                <div class="flex flex-col gap-3">
+                                    <div class="flex gap-3 justify-between w-3/4">
+                                        <label for="">PWD</label>
+                                        <input type="checkbox" name="sectoral_membership[]" value="PWD">
+                                    </div>
+                                    <div class="flex gap-3 justify-between w-3/4">
+                                        <label for="">Gov employee</label>
+                                        <input type="checkbox" name="sectoral_membership[]" value="Gov employee">
+                                    </div>
+                                    <div class="flex gap-3 justify-between w-3/4">
+                                        <label for="">Brgy. official</label>
+                                        <input type="checkbox" name="sectoral_membership[]" value="Brgy. official">
+                                    </div>
+                                    <div class="flex gap-3 justify-between w-3/4">
+                                        <label for="">Solo parent</label>
+                                        <input type="checkbox" name="sectoral_membership[]" value="Solo parent">
+                                    </div>
+                                    <div>
+                                        <label for="">Others</label>
+                                        <input type="text" class="w-1/2" name="sectoral_membership[]">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
         </div>
-        <div class="p-3 ml-3 flex gap-4">
+        <div class="p-3 ml-3 flex gap-4 mt-20">
             <label for="">Name of Companion Upon Admission/Consultation:</label>
             <input type="text" class="ml-1" name="companion_name">
             <label for="">Address of Companion:</label>
@@ -300,12 +313,12 @@
             <label for="" class="ml-6">Date of Admission/Consultation:</label>
             <input type="date" class="ml-2 w-40" name="admission_date">
         </div>
-        <div class="p-3 ml-3 flex gap-4">
+        <div class="p-3 ml-3 flex gap-4 mt-20">
             <label for="">Patient Diagnosis:</label>
-            <textarea name="diagnosis" id="" rows="5" cols="40" class="border border-pink-200 mt-2 p-2 outline-none"></textarea>
+            <textarea name="diagnosis" id="" rows="5" cols="40" class="border border-violet-200 mt-2 p-2 outline-none"></textarea>
         </div>
         <div class="p-5 btn-submit">
-            <button type="submit" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 border border-pink-700 rounded">Submit</button>
+            <button type="submit" class="bg-violet-500 hover:bg-violet-600 text-white font-bold py-2 px-4 border border-violet-700 rounded">Submit</button>
         </div>
         </form>
     </div>
