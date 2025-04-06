@@ -1,29 +1,26 @@
 <?php
-// delete.php
 
-// Include database connection
-include_once('conn/conn.php');
+use Illuminate\Database\Capsule\Manager as Capsule;
 
-// Check if the ID is provided in the URL
+require_once 'src/Database.php';
+
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
-    // Prepare and execute the delete query
-    $sql = "DELETE FROM patients WHERE id = :id";
-    $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':id', $id);
+    // Check if the ID is numeric to prevent SQL injection
+    if (!is_numeric($id)) {
+        die("Invalid ID.");
+    }
 
-    if ($stmt->execute()) {
-        // Redirect back to the client list with a success message
-        header("Location: clientList.php?message=Record deleted successfully");
-        exit();
+    // Delete the patient record
+    $deleted = Capsule::table('patients')->where('id', $id)->delete();
+
+    if ($deleted) {
+        header("Location: clientList.php?message=Patient record deleted successfully.");
+        exit;
     } else {
-        // Redirect back with an error message
-        header("Location: clientList.php?message=Error deleting record");
-        exit();
+        echo "Error deleting record.";
     }
 } else {
-    // If no ID is provided, redirect back
-    header("Location: clientList.php?message=Invalid request");
-    exit();
+    echo "No ID provided.";
 }

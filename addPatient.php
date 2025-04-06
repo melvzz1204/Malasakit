@@ -370,8 +370,8 @@
         $educational_attainment = $_POST['educational_attainment'];
         $occupation = $_POST['occupation'];
         $employment_status = isset($_POST['employment_status']) ? implode(", ", $_POST['employment_status']) : "";
-        $daily_income = $_POST['daily_income'];
-        $monthly_income = $_POST['monthly_income'];
+        $daily_income = str_replace(',', '', $_POST['daily_income']);
+        $monthly_income = str_replace(',', '', $_POST['monthly_income']);
         $sectoral_membership = isset($_POST['sectoral_membership']) ? implode(", ", $_POST['sectoral_membership']) : "";
         $companion_name = $_POST['companion_name'];
         $companion_address = $_POST['companion_address'];
@@ -401,7 +401,18 @@
             $sql = "INSERT INTO patients (first_name, last_name, middle_name, name_extension, contact_number, address, date_of_birth, age, sex, civil_status, place_of_birth, religion, educational_attainment, occupation, employment_status, daily_income, monthly_income, sectoral_membership, companion_name, companion_address, companion_contact, admission_date, diagnosis, date_registered) VALUES ('$first_name', '$last_name', '$middle_name', '$name_extension', '$contact_number', '$address', '$date_of_birth', '$age', '$sex', '$civil_status', '$place_of_birth', '$religion', '$educational_attainment', '$occupation', '$employment_status', '$daily_income', '$monthly_income', '$sectoral_membership', '$companion_name', '$companion_address', '$companion_contact', '$admission_date', '$diagnosis', '$date_registered')";
 
             if ($conn->query($sql) === TRUE) {
-                echo "<script>showSuccessMessage();</script>";
+                // Get the last inserted patient ID
+                $patient_id = $conn->insert_id;
+                
+                // Insert initial status as "New"
+                $status_sql = "INSERT INTO patient_status (patient_id, status) VALUES (?, 'New')";
+                $status_stmt = $conn->prepare($status_sql);
+                
+                if ($status_stmt->execute([$patient_id])) {
+                    echo "<script>showSuccessMessage();</script>";
+                } else {
+                    echo "Error setting initial status: " . $conn->error;
+                }
             } else {
                 echo "Error: " . $sql . "<br>" . $conn->error;
             }

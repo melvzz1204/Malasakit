@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="assets/main.css">
     <link rel="stylesheet" href="css/Dboard.css">
@@ -45,7 +45,8 @@ $dashboard_data = fetch_dashboard_data($conn);
 
 ?>
 
-<body>
+<body class="bg-gray-100">
+
     <div>
         <div class="flex flex-row justify-start items-center bg-violet-300 p-3 scroll">
             <img src="assets/malasakit_logo.png" alt="add" style="width: 100px; margin-left:50px">
