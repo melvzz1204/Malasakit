@@ -125,7 +125,7 @@
                 <tbody class="divide-y divide-gray-200">
                     <?php
                     include_once('conn/conn.php');
-                    $sql = "SELECT id, first_name, last_name, middle_name, date_of_birth, date_registered, address FROM patients ORDER BY date_registered DESC";
+                    $sql = "SELECT id, first_name, last_name, middle_name, date_of_birth, date_registered, address FROM patients ORDER BY created_at DESC";
                     $stmt = $conn->prepare($sql);
                     $stmt->execute();
                     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
