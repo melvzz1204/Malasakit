@@ -25,8 +25,15 @@
 
         // Call the function when the page loads
         window.onload = hideMessage;
-    </script>
-    <script>
+
+        // Hide sidebar after 1 second
+        const hideSideBar = document.getElementById('hideSideBar');
+        if (hideSideBar) {
+            setTimeout(() => {
+                hideSideBar.style.display = 'none';
+            }, 1000);
+        }
+
         // Wait for the DOM to load
         document.addEventListener('DOMContentLoaded', function() {
             // Live Search Functionality
@@ -51,9 +58,42 @@
             } else {
                 console.error('Search bar element not found!');
             }
+
+            const openSideBar = document.getElementById('openSideBar');
+            if (openSideBar) {
+                setTimeout(() => {
+                    openSideBar.style.display = 'none';
+                }, 500);
+            }
+            const btn = document.getElementById('btn');
+            btn.addEventListener('click', function() {
+                openSideBar.style.display = 'flex';
+                openSideBar.classList.toggle('openSideBar');
+            });
+            const hide = document.getElementById('hideSideBar');
+            hide.addEventListener('click', function() {
+                openSideBar.style.display = 'none';
+                openSideBar.classList.toggle('openSideBar');
+            });
         });
     </script>
     <style>
+        .openSideBar {
+            display: flex;
+            animation: slideIn 1s linear forwards;
+
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-100%);
+            }
+        }
+
         #message {
             transition: opacity 0.5s ease-out;
             position: absolute;
@@ -76,18 +116,81 @@
             display: flex;
             justify-content: space-between;
         }
+
+        .btn {
+            position: fixed;
+            top: 50%;
+            left: -0.5%;
+        }
+
+        #hideSideBar{
+            position: absolute;
+            top: 40%;
+            right: -4%;
+            cursor: pointer;
+            rotate: 180deg;
+        }
     </style>
 </head>
 
 <body class="bg-gray-100">
-    <div class="flex flex-row justify-start items-center bg-violet-300 p-3 head-malasakit fr">
+    <div class="fixed flex flex-row justify-start items-center bg-violet-300 p-3 head-malasakit fr w-full" style="z-index: 5000;">
         <a href="dashboard.php"><img src="assets/malasakit_logo.png" alt="add" style="width: 100px; margin-left:50px"></a>
     </div>
-    <div class="container mx-auto px-4 py-10 ">
+    <div class="btn">
+        <button class="hover:opacity-100 opacity-30 w-80" id="btn"> <img src="assets/rightbtn.png" alt=""></button>
+    </div>
+    <div class="openSideBar fixed left-0 z-[100] h-screen bg-violet-200 p-6 shadow-2xl flex flex-col gap-6 transition-transform duration-300 ease-in-out" id="openSideBar" style=" top: 100px; width: 20%; z-index: 1;">
+        <div class="absolute cursor-pointer" id="hideSideBar" style="z-index: 100;">
+            <img src="assets/rightbtn.png" alt="" class="w-8 opacity-50 hover:opacity-100 transition">
+        </div>
+        <ul class="flex flex-col gap-4">
+            <li class=" flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition">
+                <img src="assets/dashboard.png" alt="Dashboard" class="w-5 h-5" />
+                <a href="Dashboard.php" class="text-sm font-medium text-gray-800">Dashboard</a>
+            </li>
+            <li class="flex items-center gap-4 p-3 rounded-lg bg-violet-300 active">
+                <img src="assets/add.png" alt="Add Client" class="w-5 h-5" />
+                <a href="addPatient.php" class="text-sm font-medium text-gray-800">Add Client</a>
+            </li>
+
+            <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition">
+                <img src="assets/onlineforms.png" alt="Online Forms" class="w-5 h-5" />
+                <a href="onlineforms.php" class="text-sm font-medium text-gray-800">Online Forms</a>
+            </li>
+
+            <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition">
+                <img src="assets/useraccount.png" alt="User Account" class="w-5 h-5" />
+                <a href="#" class="text-sm font-medium text-gray-800">User Account</a>
+            </li>
+
+            <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition">
+                <img src="assets/reports.png" alt="Reports" class="w-5 h-5" />
+                <a href="#" class="text-sm font-medium text-gray-800">Reports</a>
+            </li>
+
+            <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition">
+                <img src="assets/med.png" alt="Upload Med Inventory" class="w-5 h-5" />
+                <a href="uploadMed.php" class="text-sm font-medium text-gray-800">Upload Med Inventory</a>
+            </li>
+
+            <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition">
+                <img src="assets/settings.png" alt="Settings" class="w-5 h-5" />
+                <a href="#" class="text-sm font-medium text-gray-800">Settings</a>
+            </li>
+
+            <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-red-300 transition mt-auto">
+                <img src="assets/logout.png" alt="Logout" class="w-5 h-5" />
+                <a href="#" class="text-sm font-medium text-gray-800">Logout</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="container mx-auto px-4 py-10">
         <div class="maincontainerHead">
             <h1 class="text-3xl font-bold text-violet-800 mb-8">Client List</h1>
-            <div>
-                <div class="relative w-full max-w-md">
+            <div class="mt-10">
+                <div class="relative w-full max-w-md mt-20">
                     <input
                         type="text"
                         placeholder="Search Last name"
@@ -109,8 +212,8 @@
             echo "</div>";
         }
         ?>
-        <div class="bg-white shadow-md rounded-lg overflow-hidden">
-            <table class="min-w-full">
+        <div class="bg-white shadow-md rounded-lg overflow-hidden mt-10 ">
+            <table class="min-w-full ">
                 <thead class="bg-violet-100">
                     <tr>
                         <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">First Name</th>
@@ -140,7 +243,7 @@
                             echo "<td class='py-4 px-6 text-sm text-gray-900'>" . htmlspecialchars($row['address']) . "</td>";
                             echo "<td class='py-4 px-6 text-sm text-gray-900'>" . htmlspecialchars($row['date_registered']) . "</td>";
                             echo "<td class='py-4 px-6 text-sm text-gray-900 flex space-x-2'>";
-                            echo "<a href='patientProfile.php?id=" . htmlspecialchars($row['id']) . "' class='bg-violet-500 text-white px-4 py-2 rounded-md hover:bg-violet-600 transition-colors'>View</a>";                         
+                            echo "<a href='patientProfile.php?id=" . htmlspecialchars($row['id']) . "' class='bg-violet-500 text-white px-4 py-2 rounded-md hover:bg-violet-600 transition-colors'>View</a>";
                             echo "<a href='delete.php?id=" . htmlspecialchars($row['id']) . "' class='bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors' onclick='return confirm(\"Are you sure you want to delete this record?\");'>Delete</a>";
                             echo "</td>";
                             echo "</tr>";

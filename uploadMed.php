@@ -18,12 +18,16 @@ $medicines = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Upload Excel File</title>
     <script src="https://cdn.tailwindcss.com"></script>
+  
 </head>
 
 <body class="bg-gray-100 min-h-screen">
+    <!-- Header -->
     <div class="flex flex-row justify-start items-center bg-violet-300 p-3">
         <a href="dashboard.php"><img src="assets/malasakit_logo.png" alt="add" style="width: 100px; margin-left:50px"></a>
     </div>
+
+ 
 
     <!-- Upload Form Section -->
     <div class="container mx-auto px-4 py-10">
@@ -188,6 +192,8 @@ $medicines = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
     <script>
+       
+
         // Updated search functionality with separate filters
         function filterTable() {
             const medicineQuery = document.getElementById('medicineSearch').value.toLowerCase();
