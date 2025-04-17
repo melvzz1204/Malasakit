@@ -92,7 +92,7 @@ if (isset($_SESSION['error'])) {
                 <img src="assets/dashboard.png" alt="Dashboard" class="w-5 h-5" />
                 <a href="Dashboard.php" class="text-sm font-medium text-gray-800">Dashboard</a>
             </li>
-            <li class="flex items-center gap-4 p-3 rounded-lg bg-violet-300 transition">
+            <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 ">
                 <img src="assets/add.png" alt="Add Client" class="w-5 h-5" />
                 <a href="addPatient.php" class="text-sm font-medium text-gray-800">Add Client</a>
             </li>
@@ -103,7 +103,7 @@ if (isset($_SESSION['error'])) {
             </li>
 
             <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
-                <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition">
+                <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition active">
                     <img src="assets/useraccount.png" alt="User Account" class="w-5 h-5" />
                     <a href="userAccount.php" class="text-sm font-medium text-gray-800">User Account</a>
                 </li>

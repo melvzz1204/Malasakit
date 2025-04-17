@@ -176,7 +176,7 @@
     <div id="error-message">
         <span>Patient already exist!</span>
     </div>
-    <div class="max-w-6xl m-auto p-6 bg-white rounded-xl shadow-md mt-20 z-index -2 ml-80">
+    <div class="max-w-6xl m-auto p-6 bg-white rounded-xl shadow-md mt-40 z-index -2 ml-80">
         <h2 class="text-3xl font-semibold mb-6 text-violet-600">Client Information Sheet</h2>
         <form method="POST" action="addPatient.php" onsubmit="return validateContactNumber()" class="space-y-8">
 

@@ -7,6 +7,7 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 
+include_once('conn/conn.php');
 ?>
 
 <head>
@@ -20,44 +21,12 @@ if (!isset($_SESSION['username'])) {
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<?php
-include_once('conn/conn.php');
-
-// Fetch data for the dashboard
-function fetch_dashboard_data($conn)
-{
-    $data = [];
-
-    // Count transactions by status
-    $statuses = ['for_approval', 'for_processing', 'pending', 'released'];
-    foreach ($statuses as $status) {
-        $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM transactions WHERE status = :status");
-        $stmt->bindParam(':status', $status);
-        $stmt->execute();
-        $result = $stmt->fetch();
-        $data[$status] = $result['count'];
-    }
-
-    // Calculate total budget
-    $stmt = $conn->prepare("SELECT SUM(amount) AS total_budget FROM transactions");
-    $stmt->execute();
-    $result = $stmt->fetch();
-    $data['total_budget'] = $result['total_budget'] ?? 0;
-
-    return $data;
-}
-
-// Fetch dashboard data
-$dashboard_data = fetch_dashboard_data($conn);
-
-?>
-
 <body class="bg-gray-100">
     <?php if (isset($_SESSION['welcome_message'])): ?>
         <div id="welcome-message" class="fixed top-0 left-0 w-full bg-green-100 text-green-700 px-4 py-3 text-center">
-            <?php 
-                echo $_SESSION['welcome_message'];
-                unset($_SESSION['welcome_message']); // Clear the message after displaying
+            <?php
+            echo $_SESSION['welcome_message'];
+            unset($_SESSION['welcome_message']); // Clear the message after displaying
             ?>
         </div>
         <script>
@@ -66,17 +35,90 @@ $dashboard_data = fetch_dashboard_data($conn);
             }, 3000); // Hide after 3 seconds
         </script>
     <?php endif; ?>
-    <div>
-        <div class="flex flex-row justify-between items-center bg-violet-300 p-3 scroll">
-            <img src="assets/malasakit_logo.png" alt="add" style="width: 100px; margin-left:50px">
-            <h1 class="text-m text-gray-800 center mr-10">Welcome, <?php echo ucfirst($_SESSION['username']); ?>!</h1>
-        </div>
-        <div>
 
+
+    <?php
+    // Fetch the count of each status
+    $status_count_sql = "SELECT status, COUNT(*) as count FROM patient_status GROUP BY status";
+    $status_count_stmt = $conn->prepare($status_count_sql);
+    $status_count_stmt->execute();
+    $status_counts = $status_count_stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Initialize counts for each status
+    $status_data = [
+        'New' => 0,
+        'Released' => 0,
+        'Pending' => 0,
+        'For Referral' => 0
+    ];
+
+    // Map the fetched counts to the corresponding statuses
+    foreach ($status_counts as $status_count) {
+        $status = $status_count['status'];
+        $count = $status_count['count'];
+        if (array_key_exists($status, $status_data)) {
+            $status_data[$status] = $count;
+        }
+    }
+    ?>
+
+
+    <?php
+    // Fetch the count of each agency
+    $agency_count_sql = "SELECT select_agency, COUNT(*) as count FROM agent_account GROUP BY select_agency";
+    $agency_count_stmt = $conn->prepare($agency_count_sql);
+    $agency_count_stmt->execute();
+    $agency_counts = $agency_count_stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Initialize counts for each agency
+    $agency_data = [
+        'Philhealth' => 0,
+        'DSWD' => 0,
+        'PCSO' => 0
+    ];
+
+    // Map the fetched counts to the corresponding agencies
+    foreach ($agency_counts as $agency_count) {
+        $agency = $agency_count['select_agency'];
+        $count = $agency_count['count'];
+        if (array_key_exists($agency, $agency_data)) {
+            $agency_data[$agency] = $count;
+        }
+    }
+    ?>
+
+    <div class="flex flex-row justify-between items-center bg-violet-300 p-3 fixed w-full" style="z-index: 100;">
+        <img src="assets/malasakit_logo.png" alt="Logo" style="width: 100px; margin-left:50px">
+        <h1 class="text-m text-gray-800 center mr-10">Welcome, <?php echo ucfirst($_SESSION['username']); ?>!</h1>
+    </div>
+    <div class="container mt-14 absolute top-20 left-1/4 w-3/4">
+        <div class="flex flex-row gap-4">
+            <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 rounded-lg shadow-md w-60">
+                <h2 class="text-l font-bold">New</h2>
+                <p class="text-xl font-semibold"><?php echo $status_data['New']; ?></p>
+            </div>
+            <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg shadow-md w-60">
+                <h2 class="text-l font-bold">Released</h2>
+                <p class="text-xl font-semibold"><?php echo $status_data['Released']; ?></p>
+            </div>
+            <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-lg shadow-md w-60">
+                <h2 class="text-l font-bold">Pending</h2>
+                <p class="text-xl font-semibold"><?php echo $status_data['Pending']; ?></p>
+            </div>
+            <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-lg shadow-md w-60">
+                <h2 class="text-l font-bold">Referral</h2>
+                <p class="text-xl font-semibold"><?php echo $status_data['For Referral']; ?></p>
+            </div>
         </div>
     </div>
-    <ul id="hideSlide"
-        class="fixed left-0 z-[100] h-screen bg-violet-200 p-6 shadow-2xl flex flex-col gap-6 transition-transform duration-300 ease-in-out" style=" top: 100px; width: 20%; z-index: -1;">
+    <div class="container mt-5 absolute top-1/3 left-1/4 w-1/2">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">Agency Distribution</h2>
+        <div class="w-80">
+            <canvas id="agencyPieChart"></canvas>
+        </div>
+    </div>
+
+    <ul id="hideSlide" class="fixed left-0 z-[100] h-screen bg-violet-200 p-6 shadow-2xl flex flex-col gap-6 transition-transform duration-300 ease-in-out" style=" top: 110px; width: 20%; z-index: -1;">
 
         <li class=" flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition active">
             <img src="assets/dashboard.png" alt="Dashboard" class="w-5 h-5" />
@@ -93,10 +135,10 @@ $dashboard_data = fetch_dashboard_data($conn);
         </li>
 
         <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
-        <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition">
-            <img src="assets/useraccount.png" alt="User Account" class="w-5 h-5" />
-            <a href="userAccount.php" class="text-sm font-medium text-gray-800">User Account</a>
-        </li>
+            <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition">
+                <img src="assets/useraccount.png" alt="User Account" class="w-5 h-5" />
+                <a href="userAccount.php" class="text-sm font-medium text-gray-800">User Account</a>
+            </li>
         <?php endif; ?>
 
         <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition">
@@ -119,71 +161,48 @@ $dashboard_data = fetch_dashboard_data($conn);
         </li>
 
     </ul>
-    <div class="dashboard">
-        <div class="card pending">
-            <h2>Pending</h2>
-            <p><?php echo $dashboard_data['pending']; ?></p>
-        </div>
-        <div class="card released">
-            <h2>Released</h2>
-            <p><?php echo $dashboard_data['released']; ?></p>
-        </div>
-        <div class="card Tbudget">
-            <h2>Total Budget</h2>
-            <p><?php echo '₱' . number_format($dashboard_data['total_budget'], 2); ?></p>
-        </div>
-    </div>
-    <!--   chart -->
-    <div class="chart-container" style="width: 50%; margin: auto;">
-        <canvas id="statusChart"></canvas>
-    </div>
-</body>
-<script src="js/sidepanel.js"></script>
-<style>
-    .chart-container {
-        position: absolute;
-        top: 30%;
-        left: 35%;
-    }
-</style>
-<!-- chart script -->
-<script>
-    const ctx = document.getElementById('statusChart').getContext('2d');
-    const statusChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['For Approval', 'For Processing', 'Pending', 'Released'],
-            datasets: [{
-                label: 'Transaction Status',
-                data: [
-                    <?php echo $dashboard_data['for_approval']; ?>,
-                    <?php echo $dashboard_data['for_processing']; ?>,
-                    <?php echo $dashboard_data['pending']; ?>,
-                    <?php echo $dashboard_data['released']; ?>
-                ],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
+
+
+    <script>
+        const ctx = document.getElementById('agencyPieChart').getContext('2d');
+        const agencyPieChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Philhealth', 'DSWD', 'PCSO'],
+                datasets: [{
+                    label: 'Agency Distribution',
+                    data: [
+                        <?php echo $agency_data['Philhealth']; ?>,
+                        <?php echo $agency_data['DSWD']; ?>,
+                        <?php echo $agency_data['PCSO']; ?>
+                    ],
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.6)', // Blue for Philhealth
+                        'rgba(255, 206, 86, 0.6)', // Yellow for DSWD
+                        'rgba(75, 192, 192, 0.6)' // Green for PCSO
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        enabled: true
+                    }
                 }
             }
-        }
-    });
-</script>
+        });
+    </script>
+</body>
+<script src="js/sidepanel.js"></script>
 
 </html>

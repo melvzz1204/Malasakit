@@ -120,6 +120,7 @@ $current_status = $status_stmt->fetchColumn();
             </form>
         </div>
     </div>
+
 </body>
 
 </html>
