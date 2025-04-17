@@ -126,23 +126,25 @@
 
         <li class=" flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition">
             <img src="assets/dashboard.png" alt="Dashboard" class="w-5 h-5" />
-            <a href="Dashboard.php" class="text-sm font-medium text-gray-800">Dashboard</a>
+            <a href="dashboard.php" class="text-sm font-medium text-gray-800">Dashboard</a>
         </li>
 
-        <li class="flex items-center gap-4 p-3 rounded-lg bg-violet-300 active">
+        <li class="flex items-center gap-4 p-3 rounded-lg bg-violet-300 ">
             <img src="assets/add.png" alt="Add Client" class="w-5 h-5" />
             <a href="addPatient.php" class="text-sm font-medium text-gray-800">Add Client</a>
         </li>
 
         <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition">
             <img src="assets/onlineforms.png" alt="Online Forms" class="w-5 h-5" />
-            <a href="onlineforms.php" class="text-sm font-medium text-gray-800">Online Forms</a>
+            <a href="#" class="text-sm font-medium text-gray-800">Online Forms</a>
         </li>
 
-        <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition">
-            <img src="assets/useraccount.png" alt="User Account" class="w-5 h-5" />
-            <a href="#" class="text-sm font-medium text-gray-800">User Account</a>
-        </li>
+        <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
+            <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition">
+                <img src="assets/useraccount.png" alt="User Account" class="w-5 h-5" />
+                <a href="userAccount.php" class="text-sm font-medium text-gray-800">User Account</a>
+            </li>
+        <?php endif; ?>
 
         <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition">
             <img src="assets/reports.png" alt="Reports" class="w-5 h-5" />
@@ -158,10 +160,9 @@
             <img src="assets/settings.png" alt="Settings" class="w-5 h-5" />
             <a href="#" class="text-sm font-medium text-gray-800">Settings</a>
         </li>
-
-        <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-red-300 transition mt-auto">
+        <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition mt-10">
             <img src="assets/logout.png" alt="Logout" class="w-5 h-5" />
-            <a href="#" class="text-sm font-medium text-gray-800">Logout</a>
+            <a href="logout.php" onclick="return confirm('Are you sure you want to logout?');" class="text-sm font-medium text-gray-800">Logout</a>
         </li>
 
     </ul>
@@ -403,11 +404,11 @@
             if ($conn->query($sql) === TRUE) {
                 // Get the last inserted patient ID
                 $patient_id = $conn->insert_id;
-                
+
                 // Insert initial status as "New"
                 $status_sql = "INSERT INTO patient_status (patient_id, status) VALUES (?, 'New')";
                 $status_stmt = $conn->prepare($status_sql);
-                
+
                 if ($status_stmt->execute([$patient_id])) {
                     echo "<script>showSuccessMessage();</script>";
                 } else {

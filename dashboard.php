@@ -1,5 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+session_start();
+if (!isset($_SESSION['username'])) {
+    header("Location: index.php");
+    exit();
+}
+
+?>
 
 <head>
     <meta charset="UTF-8">
@@ -13,7 +21,6 @@
 </head>
 
 <?php
-
 include_once('conn/conn.php');
 
 // Fetch data for the dashboard
@@ -46,10 +53,26 @@ $dashboard_data = fetch_dashboard_data($conn);
 ?>
 
 <body class="bg-gray-100">
-
+    <?php if (isset($_SESSION['welcome_message'])): ?>
+        <div id="welcome-message" class="fixed top-0 left-0 w-full bg-green-100 text-green-700 px-4 py-3 text-center">
+            <?php 
+                echo $_SESSION['welcome_message'];
+                unset($_SESSION['welcome_message']); // Clear the message after displaying
+            ?>
+        </div>
+        <script>
+            setTimeout(function() {
+                document.getElementById('welcome-message').style.display = 'none';
+            }, 3000); // Hide after 3 seconds
+        </script>
+    <?php endif; ?>
     <div>
-        <div class="flex flex-row justify-start items-center bg-violet-300 p-3 scroll">
+        <div class="flex flex-row justify-between items-center bg-violet-300 p-3 scroll">
             <img src="assets/malasakit_logo.png" alt="add" style="width: 100px; margin-left:50px">
+            <h1 class="text-m text-gray-800 center mr-10">Welcome, <?php echo ucfirst($_SESSION['username']); ?>!</h1>
+        </div>
+        <div>
+
         </div>
     </div>
     <ul id="hideSlide"
@@ -57,7 +80,7 @@ $dashboard_data = fetch_dashboard_data($conn);
 
         <li class=" flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition active">
             <img src="assets/dashboard.png" alt="Dashboard" class="w-5 h-5" />
-            <a href="Dashboard.php" class="text-sm font-medium text-gray-800 ">Dashboard</a>
+            <a href="dashboard.php" class="text-sm font-medium text-gray-800 ">Dashboard</a>
         </li>
         <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300">
             <img src="assets/add.png" alt="Add Client" class="w-5 h-5" />
@@ -66,13 +89,15 @@ $dashboard_data = fetch_dashboard_data($conn);
 
         <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition">
             <img src="assets/onlineforms.png" alt="Online Forms" class="w-5 h-5" />
-            <a href="onlineforms.php" class="text-sm font-medium text-gray-800">Online Forms</a>
+            <a href="#" class="text-sm font-medium text-gray-800">Online Forms</a>
         </li>
 
+        <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
         <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition">
             <img src="assets/useraccount.png" alt="User Account" class="w-5 h-5" />
-            <a href="#" class="text-sm font-medium text-gray-800">User Account</a>
+            <a href="userAccount.php" class="text-sm font-medium text-gray-800">User Account</a>
         </li>
+        <?php endif; ?>
 
         <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition">
             <img src="assets/reports.png" alt="Reports" class="w-5 h-5" />
@@ -88,10 +113,9 @@ $dashboard_data = fetch_dashboard_data($conn);
             <img src="assets/settings.png" alt="Settings" class="w-5 h-5" />
             <a href="#" class="text-sm font-medium text-gray-800">Settings</a>
         </li>
-
-        <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-red-300 transition mt-auto">
+        <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition mt-10">
             <img src="assets/logout.png" alt="Logout" class="w-5 h-5" />
-            <a href="#" class="text-sm font-medium text-gray-800">Logout</a>
+            <a href="logout.php" onclick="return confirm('Are you sure you want to logout?');" class="text-sm font-medium text-gray-800">Logout</a>
         </li>
 
     </ul>
