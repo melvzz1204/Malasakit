@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<?php
+    session_start();
+    if (!isset($_SESSION['username'])) {
+        header("Location: index.php");
+        exit();
+    }
+?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -116,20 +122,17 @@
                 </button>
             </a>
         </div>
-
-    </div>
-    <div class="btnSlide">
-        <img src="assets/rightbtn.png" alt="" class="w-8 h-12 opacity-30 hover:opacity-100 cursor-pointer " id="btnSlide">
     </div>
     <ul id="hideSlide"
-        class="fixed left-0 z-[100] h-screen bg-violet-200 p-6 shadow-2xl flex flex-col gap-6 transition-transform duration-300 ease-in-out" style=" top: 100px; width: 20%;">
+        class="fixed left-0 z-[100] h-screen bg-violet-200 p-6 shadow-2xl flex flex-col gap-6 transition-transform duration-300 ease-in-out"
+        style="top: 100px; width: 20%;">
 
-        <li class=" flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition">
+        <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition">
             <img src="assets/dashboard.png" alt="Dashboard" class="w-5 h-5" />
             <a href="dashboard.php" class="text-sm font-medium text-gray-800">Dashboard</a>
         </li>
 
-        <li class="flex items-center gap-4 p-3 rounded-lg bg-violet-300 ">
+        <li class="flex items-center gap-4 p-3 rounded-lg bg-violet-300">
             <img src="assets/add.png" alt="Add Client" class="w-5 h-5" />
             <a href="addPatient.php" class="text-sm font-medium text-gray-800">Add Client</a>
         </li>
@@ -140,10 +143,10 @@
         </li>
 
         <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
-            <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition">
-                <img src="assets/useraccount.png" alt="User Account" class="w-5 h-5" />
-                <a href="userAccount.php" class="text-sm font-medium text-gray-800">User Account</a>
-            </li>
+        <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition">
+            <img src="assets/useraccount.png" alt="User Account" class="w-5 h-5" />
+            <a href="userAccount.php" class="text-sm font-medium text-gray-800">User Account</a>
+        </li>
         <?php endif; ?>
 
         <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition">
@@ -162,9 +165,9 @@
         </li>
         <li class="flex items-center gap-4 p-3 rounded-lg hover:bg-violet-300 transition mt-10">
             <img src="assets/logout.png" alt="Logout" class="w-5 h-5" />
-            <a href="logout.php" onclick="return confirm('Are you sure you want to logout?');" class="text-sm font-medium text-gray-800">Logout</a>
+            <a href="logout.php" onclick="return confirm('Are you sure you want to logout?');"
+                class="text-sm font-medium text-gray-800">Logout</a>
         </li>
-
     </ul>
 
     <div id="success-message">
